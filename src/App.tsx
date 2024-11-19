@@ -289,66 +289,55 @@ function App() {
       </div>
 
       {/* Featured Properties */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-[#1b5e20]">
-            Featured Eco-Friendly Properties
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {realEstateProperties.map((data, i) => (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ scale: 1.03 }}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
-                key={i}
-              >
-                <Card className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <CardContent className="p-0 relative">
-                    <div className="relative h-64 overflow-hidden">
-                      <img
-                        src={data.image}
-                        alt={`Eco-friendly Property: ${data.name}`}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70" />
-                    </div>
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 p-4 text-white"
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{
-                        y: isHovered ? 0 : 20,
-                        opacity: isHovered ? 1 : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <h3 className="text-2xl font-bold mb-2 drop-shadow-md">
-                        {data.name}
-                      </h3>
-                      <p className="text-sm mb-2 drop-shadow-md">
-                        {data.address}
-                      </p>
-                      <ul className="flex flex-wrap gap-2">
-                        {data.ecoFeatures.map((feature, index) => (
-                          <li
-                            key={index}
-                            className="bg-[#4caf50] bg-opacity-80 text-white text-xs px-2 py-1 rounded-full flex items-center"
-                          >
-                            <Leaf className="w-3 h-3 mr-1" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+      <section className="py-20 bg-emerald-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12 text-[#1b5e20]">
+          Featured Eco-Friendly Properties
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {realEstateProperties.map((data, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+            >
+              <Card className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-0 relative">
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={data.image}
+                      alt={`Eco-friendly Property: ${data.name}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <h3 className="text-2xl font-bold mb-2 drop-shadow-md">
+                      {data.name}
+                    </h3>
+                    <p className="text-sm mb-2 drop-shadow-md">
+                      {data.address}
+                    </p>
+                    <ul className="flex flex-wrap gap-2">
+                      {data.ecoFeatures.map((feature, index) => (
+                        <li
+                          key={index}
+                          className="bg-[#4caf50] bg-opacity-80 text-white text-xs px-2 py-1 rounded-full flex items-center"
+                        >
+                          <Leaf className="w-3 h-3 mr-1" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Services Section */}
 
