@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import {
   // Search,
   MapPin,
-  Home,
   Leaf,
   Users,
   Phone,
   Mail,
   Menu,
-  Recycle,
   Sun,
+  TrendingUp,
+  Zap,
+  Droplet,
   // CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 import {
   Sheet,
   SheetContent,
@@ -38,9 +40,9 @@ import {
 } from "@/components/ui/dialog";
 
 function App() {
-  // const [count, setCount] = useState(0);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const realEstateProperties = [
     {
@@ -49,6 +51,7 @@ function App() {
       image:
         "https://media.istockphoto.com/id/1165384568/photo/europe-modern-complex-of-residential-buildings.jpg?s=612x612&w=0&k=20&c=iW4NBiMPKEuvaA7h8wIsPHikhS64eR-5EVPfjQ9GPOA=",
       price: "$2,500,000",
+      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
     },
     {
       name: "Modern Apartment",
@@ -56,6 +59,7 @@ function App() {
       image:
         "https://assets-news.housing.com/news/wp-content/uploads/2022/03/28143140/Difference-between-flat-and-apartment.jpg",
       price: "$850,000",
+      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
     },
     {
       name: "Cozy Cottage",
@@ -63,26 +67,43 @@ function App() {
       image:
         "https://media.istockphoto.com/id/1393537665/photo/modern-townhouse-design.jpg?s=612x612&w=0&k=20&c=vgQesOXDRzz0UfOZxmUtE-rFe75YgA9GvkKS8eeeumE=",
       price: "$350,000",
+      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
     },
   ];
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.2,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
     },
   };
+
+  // const itemVariants = {
+  //   hidden: { y: 20, opacity: 0 },
+  //   visible: {
+  //     y: 0,
+  //     opacity: 1,
+  //   },
+  // };
 
   const images = [
     "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -147,18 +168,16 @@ function App() {
               </SheetHeader>
               <nav className="mt-6">
                 <ul className="space-y-4">
-                  {["Home", "Properties", "About", "Contact"].map(
-                    (item) => (
-                      <li key={item}>
-                        <a
-                          href="#"
-                          className="text-gray-600 hover:text-emerald-600"
-                        >
-                          {item}
-                        </a>
-                      </li>
-                    )
-                  )}
+                  {["Home", "Properties", "About", "Contact"].map((item) => (
+                    <li key={item}>
+                      <a
+                        href="#"
+                        className="text-gray-600 hover:text-emerald-600"
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </nav>
             </SheetContent>
@@ -200,92 +219,129 @@ function App() {
       </section>
 
       {/* About Us Section (replacing Get Started) */}
-      <section className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-10">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-4">About Us</h2>
-            <p className="text-xl mb-8">
-              Pioneering sustainable living through eco-friendly real estate
-              solutions.
-              Revolutionizing sustainable living with innovative and eco-friendly real estate solutions that harmonize modern living with environmental responsibility.
+      <div className="bg-[#e6f7e9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <h2 className="text-4xl font-bold text-[#2e7d32] text-center">
+            About Us
+          </h2>
+          <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
+            <p className="text-[#1b5e20] text-xl leading-relaxed">
+              Welcome to XXXXX, where dreams find their perfect address!
             </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Leaf className="w-12 h-12" />,
-                title: "Eco-Friendly Properties",
-                description:
-                  "We specialize in homes that minimize environmental impact and maximize energy efficiency.",
-              },
-              {
-                icon: <Recycle className="w-12 h-12" />,
-                title: "Sustainable Practices",
-                description:
-                  "Our operations prioritize recycling, waste reduction, and the use of renewable resources.",
-              },
-              {
-                icon: <Sun className="w-12 h-12" />,
-                title: "Green Technology",
-                description:
-                  "We promote properties equipped with solar panels, smart home systems, and other green technologies.",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white bg-opacity-10 p-6 rounded-lg text-center"
-              >
-                <motion.div
-                  className="inline-block mb-4"
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {item.icon}
-                </motion.div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p>{item.description}</p>
-              </motion.div>
-            ))}
+            <p className="text-gray-600 text-lg leading-relaxed">
+              We are more than just a real estate platform—we are your trusted
+              partners in navigating the dynamic property market. Whether you're
+              searching for your dream home, a lucrative investment opportunity,
+              or a commercial space that inspires growth, we combine innovation
+              with personalized service to make it happen.
+            </p>
+            <p className="text-gray-600 text-lg leading-relaxed">
+              Our platform connects buyers, sellers, and renters through a
+              seamless, user-friendly experience powered by cutting-edge
+              technology. With a deep understanding of local markets and a
+              commitment to transparency, we empower you to make informed
+              decisions with confidence.
+            </p>
+            <p className="text-gray-600 text-lg leading-relaxed">
+              At XXXXX, we value relationships as much as transactions. Let us
+              help you find not just a property but a place to thrive.
+            </p>
+            <p className="text-[#2e7d32] font-semibold text-2xl text-center">
+              Your journey starts here!
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <Card className="bg-white border-none shadow-md">
+              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
+                <Users className="w-12 h-12 text-[#4caf50] mb-4" />
+                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
+                  Trusted Partners
+                </h4>
+                <p className="text-gray-600">
+                  Building lasting relationships with our clients and community
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-white border-none shadow-md">
+              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
+                <TrendingUp className="w-12 h-12 text-[#4caf50] mb-4" />
+                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
+                  Market Insights
+                </h4>
+                <p className="text-gray-600">
+                  Providing you with the latest trends and data-driven decisions
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="bg-white border-none shadow-md">
+              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
+                <Zap className="w-12 h-12 text-[#4caf50] mb-4" />
+                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
+                  Innovative Tech
+                </h4>
+                <p className="text-gray-600">
+                  Leveraging cutting-edge technology for a seamless experience
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Featured Properties */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <h2 className="text-3xl font-bold text-center mb-12 text-[#1b5e20]">
             Featured Eco-Friendly Properties
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {realEstateProperties.map((data, i) => (
               <motion.div
-                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.03 }}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                key={i}
               >
-                <Card className="overflow-hidden">
-                  <CardContent className="p-0">
-                    <img
-                      src={data.image}
-                      alt={`Eco-friendly Property ${i}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="p-4">
-                      <h3 className="text-xl font-semibold mb-2 text-gray-800">
+                <Card className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardContent className="p-0 relative">
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={data.image}
+                        alt={`Eco-friendly Property: ${data.name}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70" />
+                    </div>
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 p-4 text-white"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{
+                        y: isHovered ? 0 : 20,
+                        opacity: isHovered ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <h3 className="text-2xl font-bold mb-2 drop-shadow-md">
                         {data.name}
                       </h3>
-                      <p className="text-gray-600 mb-4">{data.address}</p>
-                    </div>
+                      <p className="text-sm mb-2 drop-shadow-md">
+                        {data.address}
+                      </p>
+                      <ul className="flex flex-wrap gap-2">
+                        {data.ecoFeatures.map((feature, index) => (
+                          <li
+                            key={index}
+                            className="bg-[#4caf50] bg-opacity-80 text-white text-xs px-2 py-1 rounded-full flex items-center"
+                          >
+                            <Leaf className="w-3 h-3 mr-1" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -295,67 +351,87 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section className="bg-emerald-50 py-20">
+
+      <section ref={ref} className="bg-emerald-50 py-20 overflow-hidden">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+          <motion.h2
+            className="text-3xl font-bold text-center mb-12 text-[#1b5e20]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+            transition={{ duration: 0.6 }}
+          >
             Our Eco-Friendly Services
-          </h2>
+          </motion.h2>
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            animate={isInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {[
               {
-                icon: <Home className="w-12 h-12 text-emerald-600" />,
-                title: "Sustainable Listings",
+                icon: <Leaf className="w-16 h-16" />,
+                title: "Green Building",
                 description:
-                  "Browse our curated list of eco-friendly properties",
+                  "Sustainable construction practices for eco-friendly homes.",
+                category: "Construction",
               },
               {
-                icon: <Leaf className="w-12 h-12 text-emerald-600" />,
-                title: "Green Property Management",
+                icon: <Droplet className="w-16 h-16" />,
+                title: "Water Conservation",
                 description:
-                  "We manage your property with sustainable practices",
+                  "Innovative solutions for reducing water consumption.",
+                category: "Utilities",
               },
               {
-                icon: <Users className="w-12 h-12 text-emerald-600" />,
-                title: "Eco-Expert Agents",
-                description: "Our agents specialize in sustainable real estate",
+                icon: <Sun className="w-16 h-16" />,
+                title: "Solar Integration",
+                description:
+                  "Seamless incorporation of solar power into your property.",
+                category: "Energy",
               },
             ].map((service, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                className="bg-white p-6 rounded-lg shadow-md"
-              >
-                <motion.div
-                  className="flex items-center mb-4"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <motion.div
-                    className="bg-emerald-100 p-3 rounded-full mr-4"
-                    whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
-                  >
-                    {service.icon}
-                  </motion.div>
-                  <h3 className="text-xl font-semibold text-gray-800">
-                    {service.title}
-                  </h3>
-                </motion.div>
-                <p className="text-gray-600">{service.description}</p>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Button variant="link" className="mt-4 text-emerald-600 p-0">
-                    Learn More
-                  </Button>
-                </motion.div>
+              <motion.div key={index} variants={cardVariants}>
+                <Card className="overflow-hidden bg-gradient-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow duration-300">
+                  <CardContent className="p-0">
+                    <div className="relative h-40 bg-emerald-600 overflow-hidden">
+                      <motion.div
+                        className="absolute inset-0 flex items-center justify-center text-white"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                      >
+                        {service.icon}
+                      </motion.div>
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-emerald-600 to-transparent"
+                        initial={{ y: "100%" }}
+                        animate={{ y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.4 }}
+                      />
+                    </div>
+                    <div className="p-6">
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.4, duration: 0.3 }}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="mb-2 bg-emerald-100 text-emerald-800"
+                        >
+                          {service.category}
+                        </Badge>
+                        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                          {service.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm">
+                          {service.description}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </motion.div>
@@ -522,20 +598,21 @@ function App() {
               <p className="mb-4">
                 Your trusted partner in finding the perfect eco-friendly home.
               </p>
-              <p>© 2024 xxxxx. All rights reserved |  Designed and maintained by princeglobe </p>
+              <p>
+                © 2024 xxxxx. All rights reserved | Designed and maintained by
+                princeglobe{" "}
+              </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                {["Home", "Properties", "About", "Contact"].map(
-                  (item) => (
-                    <li key={item}>
-                      <a href="#" className="hover:text-emerald-400">
-                        {item}
-                      </a>
-                    </li>
-                  )
-                )}
+                {["Home", "Properties", "About", "Contact"].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="hover:text-emerald-400">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
