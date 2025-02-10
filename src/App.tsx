@@ -13,6 +13,7 @@ import {
   TrendingUp,
   Zap,
   Droplet,
+  Redo2,
   // CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,17 @@ function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50); // Change color after 50px scroll
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const realEstateProperties = [
     {
@@ -128,7 +140,7 @@ function App() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className="bg-white shadow-sm sticky top-0 z-10"
+        className={`fixed w-full top-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white' :'bg-transparent'}`}
       >
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <motion.div
@@ -136,7 +148,7 @@ function App() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-2xl font-bold text-emerald-600">Logo</h1>
+            <h1 className="text-2xl font-bold text-emerald-600">AS Property</h1>
           </motion.div>
           <nav className="hidden md:block">
             <motion.ul
@@ -147,7 +159,7 @@ function App() {
             >
               {["Home", "Properties", "About", "Contact"].map((item) => (
                 <motion.li key={item} whileHover={{ scale: 1.1 }}>
-                  <a href="#" className="text-gray-600 hover:text-emerald-600">
+                  <a href="#" className={`${isScrolled ? "text-gray-600": "text-white"} hover:text-emerald-600`}>
                     {item}
                   </a>
                 </motion.li>
@@ -162,7 +174,7 @@ function App() {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>XXXX</SheetTitle>
+                <SheetTitle>AS Property</SheetTitle>
                 <SheetDescription>
                   Navigate our eco-friendly properties
                 </SheetDescription>
@@ -223,11 +235,11 @@ function App() {
       <div className="bg-[#e6f7e9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto space-y-8">
           <h2 className="text-4xl font-bold text-[#2e7d32] text-center">
-            About Us
+            Why Us
           </h2>
           <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
             <p className="text-[#1b5e20] text-xl leading-relaxed">
-              Welcome to XXXXX, where dreams find their perfect address!
+              Welcome to AS Property, where dreams find their perfect address!
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
               We are more than just a real estate platform—we are your trusted
@@ -244,7 +256,7 @@ function App() {
               decisions with confidence.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              At XXXXX, we value relationships as much as transactions. Let us
+              At AS Property, we value relationships as much as transactions. Let us
               help you find not just a property but a place to thrive.
             </p>
             <p className="text-[#2e7d32] font-semibold text-2xl text-center">
@@ -589,12 +601,12 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">XXXXX</h3>
+              <h3 className="text-xl font-semibold mb-4">AS Property</h3>
               <p className="mb-4">
                 Your trusted partner in finding the perfect eco-friendly home.
               </p>
               <p>
-                © 2024 xxxxx. All rights reserved | Designed and maintained by
+                © 2024 AS Property. All rights reserved | Designed and maintained by
                 princeglobe{" "}
               </p>
             </div>
@@ -620,7 +632,7 @@ function App() {
                 <Phone className="mr-2" /> (123) xxx-xxxxx
               </p>
               <p className="flex items-center">
-                <Mail className="mr-2" /> info@xxxxxx.com
+                <Mail className="mr-2" /> info@asproperty.com
               </p>
             </div>
           </div>
