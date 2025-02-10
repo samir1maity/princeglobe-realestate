@@ -38,6 +38,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import PropertyCarousel from "./components/Carousel/PropertyCarousel";
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -286,6 +287,11 @@ function App() {
             </Card>
           </div>
         </div>
+      </div>
+
+
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <PropertyCarousel />
       </div>
 
       {/* Featured Properties */}
