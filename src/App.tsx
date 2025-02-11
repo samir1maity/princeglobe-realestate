@@ -13,7 +13,7 @@ import {
   TrendingUp,
   Zap,
   Droplet,
-  Redo2,
+  // Redo2,
   // CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -40,11 +40,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import PropertyCarousel from "./components/Carousel/PropertyCarousel";
+// import icon from './assets/icons/A.S PROPERTY MANAGEMANT PNG.png'
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -148,7 +149,8 @@ function App() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-2xl font-bold text-emerald-600">AS Property</h1>
+            <h1 className="text-2xl font-bold text-emerald-500">AS Property Management</h1>
+            {/* <img src={icon} alt="AS Property Management" className="w-8 h-8"/> */}
           </motion.div>
           <nav className="hidden md:block">
             <motion.ul
@@ -157,8 +159,8 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, staggerChildren: 0.1 }}
             >
-              {["Home", "Properties", "About", "Contact"].map((item) => (
-                <motion.li key={item} whileHover={{ scale: 1.1 }}>
+              {["Home", "Why Us", "Featured", "Services", "Contact"].map((item) => (
+                <motion.li key={item} whileHover={{ scale: 1.1 }} className="flex items-center justify-center">
                   <a href="#" className={`${isScrolled ? "text-gray-600": "text-white"} hover:text-emerald-600`}>
                     {item}
                   </a>
@@ -174,15 +176,15 @@ function App() {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>AS Property</SheetTitle>
+                <SheetTitle>AS Property Management</SheetTitle>
                 <SheetDescription>
                   Navigate our eco-friendly properties
                 </SheetDescription>
               </SheetHeader>
               <nav className="mt-6">
                 <ul className="space-y-4">
-                  {["Home", "Properties", "About", "Contact"].map((item) => (
-                    <li key={item}>
+                  {["Home", "Why Us", "Featured Properties", "Services", "Contact Us"].map((item) => (
+                    <li key={item} className="flex items-center justify-center">
                       <a
                         href="#"
                         className="text-gray-600 hover:text-emerald-600"
@@ -199,7 +201,7 @@ function App() {
       </motion.header>
 
       {/*  hero section */}
-      <section className="relative h-[500px] overflow-hidden">
+      <section className="relative min-h-screen overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.img
             key={currentImageIndex}
@@ -239,7 +241,7 @@ function App() {
           </h2>
           <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
             <p className="text-[#1b5e20] text-xl leading-relaxed">
-              Welcome to AS Property, where dreams find their perfect address!
+              Welcome to AS Property Management, where dreams find their perfect address!
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
               We are more than just a real estate platform—we are your trusted
@@ -256,7 +258,7 @@ function App() {
               decisions with confidence.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              At AS Property, we value relationships as much as transactions. Let us
+              At AS Property Management, we value relationships as much as transactions. Let us
               help you find not just a property but a place to thrive.
             </p>
             <p className="text-[#2e7d32] font-semibold text-2xl text-center">
@@ -445,51 +447,9 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      {/* <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            What Our Eco-Conscious Clients Say
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <motion.div
-              key={currentTestimonial}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.5 }}
-              className="bg-white p-8 rounded-lg shadow-md text-center"
-            >
-              <p className="text-xl italic mb-4 text-gray-700">
-                &ldquo;{testimonials[currentTestimonial].text}&rdquo;
-              </p>
-              <p className="font-semibold text-gray-800">
-                {testimonials[currentTestimonial].name}
-              </p>
-              <div className="flex justify-center mt-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-yellow-400 fill-current"
-                  />
-                ))}
-              </div>
-            </motion.div>
-            <div className="flex justify-center mt-8 space-x-4">
-              <Button variant="outline" onClick={prevTestimonial}>
-                <ChevronLeft />
-              </Button>
-              <Button variant="outline" onClick={nextTestimonial}>
-                <ChevronRight />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       {/* Contact Form */}
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-8">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             Contact Us
           </h2>
@@ -601,19 +561,19 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">AS Property</h3>
+              <h3 className="text-xl font-semibold mb-4">AS Property Management</h3>
               <p className="mb-4">
                 Your trusted partner in finding the perfect eco-friendly home.
               </p>
               <p>
-                © 2024 AS Property. All rights reserved | Designed and maintained by
-                princeglobe{" "}
+                © 2024 AS Property Management. All rights reserved | Designed and maintained by
+                Princeglobe{" "}
               </p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                {["Home", "Properties", "About", "Contact"].map((item) => (
+                {["Home", "Why Us", "Featured", "Services", "Contact"].map((item) => (
                   <li key={item}>
                     <a href="#" className="hover:text-emerald-400">
                       {item}
@@ -625,14 +585,16 @@ function App() {
             <div>
               <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
               <p className="flex items-center mb-2">
-                <MapPin className="mr-2" /> 123 Eco Estate St, Green City, State
-                12345
+                <MapPin className="mr-2" /> 19/a/3/a D. J. Bye Lane (W) , Konnagar,  Hooghly.  712235.
               </p>
               <p className="flex items-center mb-2">
-                <Phone className="mr-2" /> (123) xxx-xxxxx
+                <MapPin className="mr-2" /> 1/232 Naktala , Kolkata 700047. 
+              </p>
+              <p className="flex items-center mb-2">
+                <Phone className="mr-2" /> (+91) 9051396162,   (+91) 9123699601
               </p>
               <p className="flex items-center">
-                <Mail className="mr-2" /> info@asproperty.com
+                <Mail className="mr-2" /> aspropertymanagement2023@gmail.com
               </p>
             </div>
           </div>

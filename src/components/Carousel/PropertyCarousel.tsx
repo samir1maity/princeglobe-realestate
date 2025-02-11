@@ -115,7 +115,7 @@ const PropertyCarousel = () => {
             }}
             className="absolute w-full h-full"
           >
-            <div className="flex flex-col md:flex-row h-full gap-4 md:gap-6 lg:gap-8">
+            <div className="flex md:flex-row h-full gap-4 md:gap-6 lg:gap-8">
               <div className="w-full md:w-2/3 relative overflow-hidden rounded-2xl group">
                 <motion.img
                   src={properties[page].image}
