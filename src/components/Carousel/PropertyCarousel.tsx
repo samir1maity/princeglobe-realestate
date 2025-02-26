@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, MapPin, Home, DollarSign } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Home } from 'lucide-react';
 import kolkata_s1 from '../../assets/properties/kolkata-s1.jpeg'
 import kolkata_s2 from '../../assets/properties/kolkata-s2.jpeg'
 import kolkata_s3 from '../../assets/properties/kolkata-s3.jpeg'
