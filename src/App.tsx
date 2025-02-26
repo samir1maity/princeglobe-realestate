@@ -2,19 +2,17 @@ import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import {
-  // Search,
   MapPin,
-  Leaf,
-  Users,
   Phone,
   Mail,
   Menu,
-  Sun,
-  TrendingUp,
-  Zap,
-  Droplet,
-  // Redo2,
-  // CheckCircle2,
+  Home,
+  DollarSign,
+  FileText,
+  Paintbrush,
+  Eye,
+  MessageSquare,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +38,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import PropertyCarousel from "./components/Carousel/PropertyCarousel";
+import logo from './assets/icons/as 3d png.png'; // Import the logo image
 // import icon from './assets/icons/A.S PROPERTY MANAGEMANT PNG.png'
 
 function App() {
@@ -47,6 +46,7 @@ function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // const [isHovered, setIsHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,28 +60,22 @@ function App() {
 
   const realEstateProperties = [
     {
-      name: "Luxury Villa",
-      address: "123 Palm Street, Beverly Hills, CA",
-      image:
-        "https://media.istockphoto.com/id/1165384568/photo/europe-modern-complex-of-residential-buildings.jpg?s=612x612&w=0&k=20&c=iW4NBiMPKEuvaA7h8wIsPHikhS64eR-5EVPfjQ9GPOA=",
-      price: "$2,500,000",
-      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
+      name: "Green Valley Retreat",
+      address: "Bolpur, Santiniketan",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+      ecoFeatures: ["Santiniketan", "Cultural Hub", "University Town"]
     },
     {
-      name: "Modern Apartment",
-      address: "456 Maple Avenue, New York, NY",
-      image:
-        "https://assets-news.housing.com/news/wp-content/uploads/2022/03/28143140/Difference-between-flat-and-apartment.jpg",
-      price: "$850,000",
-      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
+      name: "Riverside Eco Cottage",
+      address: "Santiniketan, Birbhum",
+      image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80",
+      ecoFeatures: ["Pous Mela", "Baul Music", "Art Colony"]
     },
     {
-      name: "Cozy Cottage",
-      address: "789 Sunset Boulevard, Miami, FL",
-      image:
-        "https://media.istockphoto.com/id/1393537665/photo/modern-townhouse-design.jpg?s=612x612&w=0&k=20&c=vgQesOXDRzz0UfOZxmUtE-rFe75YgA9GvkKS8eeeumE=",
-      price: "$350,000",
-      ecoFeatures: ["Solar Panels", "Rainwater Harvesting", "Energy-Efficient"],
+      name: "Mountain View Villa",
+      address: "Dooars, Jalpaiguri",
+      image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
+      ecoFeatures: ["Tea Gardens", "Wildlife", "River View"]
     },
   ];
 
@@ -143,14 +137,14 @@ function App() {
         transition={{ type: "spring", stiffness: 100 }}
         className={`fixed w-full top-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white' :'bg-transparent'}`}
       >
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto p-2 flex justify-between items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
+            className="flex items-center"
           >
-            <h1 className="text-2xl font-bold text-emerald-500">AS Property Management</h1>
-            {/* <img src={icon} alt="AS Property Management" className="w-8 h-8"/> */}
+            <img src={logo} alt="AS Property Management" className="h-14 w-auto mr-2"/>
           </motion.div>
           <nav className="hidden md:block">
             <motion.ul
@@ -216,18 +210,72 @@ function App() {
         </AnimatePresence>
         <div className="absolute inset-0 bg-black bg-opacity-50" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center text-white">
+          <div className="container mx-auto px-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold mb-4">
-                Discover Your Eco-Friendly Dream Home
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                <span className="relative inline-block">
+                  Discover
+                  <motion.span 
+                    className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                  />
+                </span>{" "}
+                <span className="relative inline-block">
+                  Your
+                  <motion.span 
+                    className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                  />
+                </span>{" "}
+                <span className="block mt-2">
+                  <span className="relative inline-block">
+                    Eco-Friendly
+                    <motion.span 
+                      className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 0.8, duration: 0.8 }}
+                    />
+                  </span>{" "}
+                  <span className="relative inline-block">
+                    Dream Home
+                    <motion.span 
+                      className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 1.0, duration: 0.8 }}
+                    />
+                  </span>
+                </span>
               </h2>
-              <p className="text-xl mb-8">
-                Sustainable living in harmony with nature
-              </p>
+              <motion.p 
+                className="text-xl md:text-2xl font-light mb-8 text-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+              >
+                <span className="relative inline-block px-2 py-1">
+                  <span className="relative z-10">Sustainable living in harmony with nature</span>
+                  <span className="absolute inset-0 bg-emerald-600/20 backdrop-blur-sm rounded-lg -skew-x-3"></span>
+                </span>
+              </motion.p>
+              {/* <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4, duration: 0.5 }}
+              >
+                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                  Explore Properties
+                </Button>
+              </motion.div> */}
             </motion.div>
           </div>
         </div>
@@ -236,8 +284,12 @@ function App() {
       {/* About Us Section (replacing Get Started) */}
       <div className="bg-[#e6f7e9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto space-y-8">
-          <h2 className="text-4xl font-bold text-[#2e7d32] text-center">
-            Why Us
+          <h2 className="relative text-4xl font-bold text-center mb-12">
+            <span className="inline-flex items-center">
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
+              <span className="relative text-[#2e7d32]">Why Us</span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+            </span>
           </h2>
           <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
             <p className="text-[#1b5e20] text-xl leading-relaxed">
@@ -311,8 +363,12 @@ function App() {
       {/* Featured Properties */}
       <section className="py-20 bg-emerald-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-[#1b5e20]">
-          Featured Eco-Friendly Properties
+        <h2 className="relative text-4xl font-bold text-center mb-12">
+          <span className="inline-flex items-center">
+            <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
+            <span className="relative text-[#1b5e20]">Featured Eco-Friendly Properties</span>
+            <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+          </span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {realEstateProperties.map((data, i) => (
@@ -343,10 +399,10 @@ function App() {
                       {data.ecoFeatures.map((feature, index) => (
                         <li
                           key={index}
-                          className="bg-[#4caf50] bg-opacity-80 text-white text-xs px-2 py-1 rounded-full flex items-center"
+                          className="bg-emerald-600 text-white text-xs px-2 py-1 rounded-full flex items-center shadow-md"
                         >
-                          <Leaf className="w-3 h-3 mr-1" />
-                          <span>{feature}</span>
+                          <MapPin className="w-3 h-3 mr-1 text-orange-200" />
+                          <span className="font-medium">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -364,12 +420,16 @@ function App() {
       <section ref={ref} className="bg-emerald-50 py-20 overflow-hidden">
         <div className="container mx-auto px-4">
           <motion.h2
-            className="text-3xl font-bold text-center mb-12 text-[#1b5e20]"
+            className="relative text-4xl font-bold text-center mb-12"
             initial={{ opacity: 0, y: -20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.6 }}
           >
-            Our Eco-Friendly Services
+            <span className="inline-flex items-center">
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
+              <span className="relative text-[#1b5e20]">Our Eco-Friendly Services</span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+            </span>
           </motion.h2>
           <motion.div
             variants={containerVariants}
@@ -379,25 +439,46 @@ function App() {
           >
             {[
               {
-                icon: <Leaf className="w-16 h-16" />,
-                title: "Green Building",
+                icon: <Home className="w-16 h-16" />,
+                title: "Flat Sale",
                 description:
-                  "Sustainable construction practices for eco-friendly homes.",
-                category: "Construction",
+                  "Find your perfect apartment with our extensive selection of premium flats across West Bengal.",
+                category: "Residential",
               },
               {
-                icon: <Droplet className="w-16 h-16" />,
-                title: "Water Conservation",
+                icon: <MapPin className="w-16 h-16" />,
+                title: "Land Sale",
                 description:
-                  "Innovative solutions for reducing water consumption.",
-                category: "Utilities",
+                  "Invest in prime plots and land parcels in strategic locations with high growth potential.",
+                category: "Investment",
               },
               {
-                icon: <Sun className="w-16 h-16" />,
-                title: "Solar Integration",
+                icon: <DollarSign className="w-16 h-16" />,
+                title: "Home Loan",
                 description:
-                  "Seamless incorporation of solar power into your property.",
-                category: "Energy",
+                  "Access competitive home loan options with our network of trusted financial partners.",
+                category: "Finance",
+              },
+              {
+                icon: <FileText className="w-16 h-16" />,
+                title: "Legal Assistance",
+                description:
+                  "Expert legal guidance for property documentation, verification, and dispute resolution.",
+                category: "Legal",
+              },
+              {
+                icon: <Paintbrush className="w-16 h-16" />,
+                title: "Interior Design",
+                description:
+                  "Transform your property with our professional interior design and renovation services.",
+                category: "Design",
+              },
+              {
+                icon: <Eye className="w-16 h-16" />,
+                title: "Property Visits",
+                description:
+                  "Schedule guided property tours with our experts who provide comprehensive information and personalized assistance.",
+                category: "Support",
               },
             ].map((service, index) => (
               <motion.div key={index} variants={cardVariants}>
@@ -450,8 +531,12 @@ function App() {
       {/* Contact Form */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Contact Us
+          <h2 className="relative text-4xl font-bold text-center mb-12">
+            <span className="inline-flex items-center">
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
+              <span className="relative text-gray-800">Contact Us</span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+            </span>
           </h2>
           <div className="max-w-2xl mx-auto">
             <form className="space-y-6">
@@ -555,6 +640,81 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Floating Chat Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <AnimatePresence>
+          {!isChatOpen && (
+            <motion.button
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              whileHover={{ scale: 1.1 }}
+              onClick={() => setIsChatOpen(true)}
+              className="bg-emerald-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center"
+            >
+              <MessageSquare className="h-6 w-6" />
+            </motion.button>
+          )}
+        </AnimatePresence>
+        
+        <AnimatePresence>
+          {isChatOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.9 }}
+              className="absolute bottom-0 right-0 w-80 sm:w-96 bg-white rounded-lg shadow-xl overflow-hidden"
+            >
+              <div className="bg-emerald-600 text-white p-4 flex justify-between items-center">
+                <h3 className="font-medium">Send us an inquiry</h3>
+                <button 
+                  onClick={() => setIsChatOpen(false)}
+                  className="text-white hover:bg-emerald-700 rounded-full p-1"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="p-4">
+                <form className="space-y-4">
+                  <div>
+                    <Label htmlFor="chat-name">Name</Label>
+                    <Input id="chat-name" placeholder="Your name" className="mt-1" />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="chat-email">Email</Label>
+                    <Input id="chat-email" type="email" placeholder="Your email" className="mt-1" />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="chat-phone">Phone</Label>
+                    <Input id="chat-phone" placeholder="Your phone number" className="mt-1" />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="chat-message">Message</Label>
+                    <Textarea 
+                      id="chat-message" 
+                      placeholder="How can we help you?" 
+                      className="mt-1 resize-none"
+                      rows={3}
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-emerald-600 hover:bg-emerald-700"
+                  >
+                    Send Message
+                  </Button>
+                </form>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">

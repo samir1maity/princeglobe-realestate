@@ -5,7 +5,6 @@ import kolkata_s1 from '../../assets/properties/kolkata-s1.jpeg'
 import kolkata_s2 from '../../assets/properties/kolkata-s2.jpeg'
 import kolkata_s3 from '../../assets/properties/kolkata-s3.jpeg'
 import kolkata_s4 from '../../assets/properties/kolkata-s4.jpeg'
-import kolkata_s5 from '../../assets/properties/kolkata-s5.jpeg'
 
 interface Property {
   id: number;
@@ -13,6 +12,7 @@ interface Property {
   title: string;
   price: string;
   location: string;
+  area: string;
   type: string;
 }
 
@@ -20,34 +20,38 @@ const properties: Property[] = [
   {
     id: 1,
     image: kolkata_s1,
-    title: 'Modern Luxury Villa',
-    price: '$1,250,000',
-    location: 'Beverly Hills, CA',
+    title: 'Premium Riverside Villa',
+    price: '₹30 Lakhs',
+    location: 'Konnagar, Hooghly',
+    area: 'West Bengal',
     type: 'Villa'
   },
   {
     id: 2,
     image: kolkata_s2,
-    title: 'Oceanfront Paradise',
-    price: '$2,500,000',
-    location: 'Malibu, CA',
-    type: 'Beach House'
+    title: 'Modern Apartment Complex',
+    price: '₹30 Lakhs',
+    location: 'Garia, South Kolkata',
+    area: 'West Bengal',
+    type: 'Apartment'
   },
   {
     id: 3,
     image: kolkata_s3,
-    title: 'Urban Penthouse',
-    price: '$3,750,000',
-    location: 'Manhattan, NY',
-    type: 'Penthouse'
+    title: 'Luxury Garden Residence',
+    price: '₹30 Lakhs',
+    location: 'Boral, South Kolkata',
+    area: 'West Bengal',
+    type: 'Bungalow'
   },
   {
     id: 4,
     image: kolkata_s4,
-    title: 'Mountain Retreat',
-    price: '$1,850,000',
-    location: 'Aspen, CO',
-    type: 'Cabin'
+    title: 'Riverside Heritage Home',
+    price: '₹30 Lakhs',
+    location: 'Chandannagar, Hooghly',
+    area: 'West Bengal',
+    type: 'Heritage'
   }
 ];
 
@@ -100,7 +104,7 @@ const PropertyCarousel = () => {
       <h2 className="relative text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 md:mb-8 lg:mb-12 border-l-4 border-orange-500 pl-4 md:pl-6">
         FEATURED PROPERTIES
         <span className="block text-xs sm:text-sm font-normal text-orange-400 mt-1 md:mt-2">
-          Discover Your Dream Home
+          Discover Your Dream Home in West Bengal
         </span>
       </h2>
       
@@ -138,19 +142,22 @@ const PropertyCarousel = () => {
                   transition={{ delay: 0.2 }}
                 >
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{properties[page].title}</h3>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-orange-400 mb-2 sm:mb-4">
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="text-xs sm:text-sm">{properties[page].location}</span>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white mb-2 sm:mb-4">
+                    <div className="flex items-center gap-1 bg-black/30 px-2 py-1 rounded-full">
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
+                      <span className="text-xs sm:text-sm font-medium">{properties[page].location}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Home className="w-3 h-3 sm:w-4 sm:h-4" />
-                      <span className="text-xs sm:text-sm">{properties[page].type}</span>
+                    <div className="flex items-center gap-1 bg-black/30 px-2 py-1 rounded-full">
+                      <Home className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
+                      <span className="text-xs sm:text-sm font-medium">{properties[page].type}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1 sm:gap-2 text-lg sm:text-xl md:text-2xl font-bold">
-                    <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                    {properties[page].price}
+                    <span className="bg-emerald-600/90 px-3 py-1 rounded-lg flex items-center">
+                      {/* <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> */}
+                      {properties[page].price}
+                    </span>
+                    <span className="text-xs text-white font-medium ml-2 mt-1 bg-orange-500/80 px-2 py-1 rounded-full">Premium Property</span>
                   </div>
                 </motion.div>
               </div>
@@ -174,8 +181,8 @@ const PropertyCarousel = () => {
                       />
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
                       <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-4 text-white">
-                        <h4 className="text-sm sm:text-base md:text-lg font-semibold line-clamp-1">{property.title}</h4>
-                        <p className="text-xs sm:text-sm text-orange-400 line-clamp-1">{property.location}</p>
+                        <h4 className="text-sm sm:text-base md:text-lg font-semibold line-clamp-1 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">{property.title}</h4>
+                        <p className="text-xs sm:text-sm bg-black/30 text-white inline-block px-2 py-0.5 rounded-full mt-1 line-clamp-1">{property.location}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -207,9 +214,10 @@ const PropertyCarousel = () => {
             onClick={() => setPage([index, index > page ? 1 : -1])}
             className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
               index === page 
-                ? 'bg-orange-500 w-6 sm:w-8' 
-                : 'bg-white/30 hover:bg-white/50 w-1.5 sm:w-2'
+                ? 'w-6 sm:w-8 bg-orange-500' 
+                : 'w-3 sm:w-4 bg-white/30 hover:bg-white/50'
             }`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
