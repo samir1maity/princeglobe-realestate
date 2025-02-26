@@ -265,7 +265,7 @@ function App() {
               Your journey starts here!
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          {/* <div className="grid gap-6 md:grid-cols-3">
             <Card className="bg-white border-none shadow-md">
               <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
                 <Users className="w-12 h-12 text-[#4caf50] mb-4" />
@@ -299,7 +299,7 @@ function App() {
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
         </div>
       </div>
 
