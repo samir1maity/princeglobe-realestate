@@ -7,12 +7,14 @@ import {
   Mail,
   Menu,
   Home,
-  DollarSign,
-  FileText,
   Paintbrush,
   Eye,
   MessageSquare,
   X,
+  ChevronDown,
+  Map,
+  Banknote,
+  Scale,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,8 +40,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import PropertyCarousel from "./components/Carousel/PropertyCarousel";
-import logo from './assets/icons/as 3d png.png'; // Import the logo image
-// import icon from './assets/icons/A.S PROPERTY MANAGEMANT PNG.png'
+import logo from "./assets/icons/as 3d png.png";
+import konnagar1 from "./assets/properties/konnagar1.jpeg";
+import konnagar_2 from "./assets/properties/konnagar_2.jpeg";
+import hindmotor from "./assets/properties/hindmototr1.jpeg";
+import eco_cast from "./assets/properties/eco_cast.jpeg";
+import muktu from "./assets/properties/muktu.jpeg";
+import dooars from "./assets/properties/dooars.jpeg";
+import { Link as ScrollLink } from "react-scroll";
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -47,6 +55,7 @@ function App() {
   // const [isHovered, setIsHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,28 +63,54 @@ function App() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const realEstateProperties = [
     {
-      name: "Green Valley Retreat",
+      name: "Master para project",
       address: "Bolpur, Santiniketan",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-      ecoFeatures: ["Santiniketan", "Cultural Hub", "University Town"]
+      image: konnagar1,
+      price: "₹2700/- per sqft",
+      description: "1/2/3 bhk available",
     },
     {
-      name: "Riverside Eco Cottage",
-      address: "Santiniketan, Birbhum",
-      image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&q=80",
-      ecoFeatures: ["Pous Mela", "Baul Music", "Art Colony"]
+      name: "Lake View",
+      address: "Konnagar",
+      image: konnagar_2,
+      price: "₹2500/- per sqft",
+      description: "1/2/3 bhk Available in Konnagar",
     },
     {
-      name: "Mountain View Villa",
+      name: "Hindmotor",
       address: "Dooars, Jalpaiguri",
-      image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=80",
-      ecoFeatures: ["Tea Gardens", "Wildlife", "River View"]
+      image: hindmotor,
+      ecoFeatures: ["Green Roof", "Recycled Materials", "Solar Water Heating"],
+      price: "₹2700/- per sqft.",
+      description:
+        "Luxury mountain retreat overlooking tea gardens with sustainable construction and panoramic Himalayan views.",
+    },
+    {
+      name: "Eco Crest",
+      address: "Garia ,South Kolkata",
+      image: eco_cast,
+      description:
+        "With all modern amenities, roof top Swimming pool, kids paly area, club house, gym, garden, G+11 with commercial space.",
+    },
+    {
+      name: "Muktodhara",
+      address: "Bolpur-Shantiniketan",
+      image: muktu,
+      description:
+        "",
+    },
+    {
+      name: "Dooars",
+      address: "Jalpaiguri",
+      image: dooars,
+      description:
+        "Beautifully restored colonial-era home with modern eco-friendly upgrades and riverside location.",
     },
   ];
 
@@ -105,13 +140,6 @@ function App() {
     },
   };
 
-  // const itemVariants = {
-  //   hidden: { y: 20, opacity: 0 },
-  //   visible: {
-  //     y: 0,
-  //     opacity: 1,
-  //   },
-  // };
 
   const images = [
     "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -128,6 +156,18 @@ function App() {
     };
   }, []);
 
+  const navItems = [
+    { name: "Home", to: "home", offset: -100 },
+    { name: "Why Us", to: "why-us", offset: -80 },
+    { name: "Properties", to: "properties", offset: -80 },
+    { name: "Services", to: "services", offset: -80 },
+    { name: "Contact", to: "contact", offset: -80 }
+  ];
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -135,7 +175,9 @@ function App() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className={`fixed w-full top-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white' :'bg-transparent'}`}
+        className={`fixed w-full z-[99999] top-0 transition-all duration-300 ${
+          isScrolled ? "bg-white" : "bg-transparent"
+        }`}
       >
         <div className="container mx-auto p-2 flex justify-between items-center">
           <motion.div
@@ -144,7 +186,11 @@ function App() {
             transition={{ duration: 0.5 }}
             className="flex items-center"
           >
-            <img src={logo} alt="AS Property Management" className="h-14 w-auto mr-2"/>
+            <img
+              src={logo}
+              alt="AS Property Management"
+              className="h-14 w-auto mr-2"
+            />
           </motion.div>
           <nav className="hidden md:block">
             <motion.ul
@@ -153,13 +199,24 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, staggerChildren: 0.1 }}
             >
-              {["Home", "Why Us", "Featured", "Services", "Contact"].map((item) => (
-                <motion.li key={item} whileHover={{ scale: 1.1 }} className="flex items-center justify-center">
-                  <a href="#" className={`${isScrolled ? "text-gray-600": "text-white"} hover:text-emerald-600`}>
-                    {item}
-                  </a>
-                </motion.li>
-              ))}
+              {["Home", "Why Us", "Featured", "Services", "Contact"].map(
+                (item) => (
+                  <motion.li
+                    key={item}
+                    whileHover={{ scale: 1.1 }}
+                    className="flex items-center justify-center"
+                  >
+                    <a
+                      href="#"
+                      className={`${
+                        isScrolled ? "text-gray-600" : "text-white"
+                      } hover:text-emerald-600`}
+                    >
+                      {item}
+                    </a>
+                  </motion.li>
+                )
+              )}
             </motion.ul>
           </nav>
           <Sheet>
@@ -177,7 +234,13 @@ function App() {
               </SheetHeader>
               <nav className="mt-6">
                 <ul className="space-y-4">
-                  {["Home", "Why Us", "Featured Properties", "Services", "Contact Us"].map((item) => (
+                  {[
+                    "Home",
+                    "Why Us",
+                    "Featured Properties",
+                    "Services",
+                    "Contact Us",
+                  ].map((item) => (
                     <li key={item} className="flex items-center justify-center">
                       <a
                         href="#"
@@ -194,106 +257,129 @@ function App() {
         </div>
       </motion.header>
 
-      {/*  hero section */}
-      <section className="relative min-h-screen overflow-hidden">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={currentImageIndex}
-            src={images[currentImageIndex]}
-            alt={`Eco-friendly home ${currentImageIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-cover"
+      {/* Sidebar for Mobile */}
+      <div
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-blue-800 text-white transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out md:hidden`}
+      >
+        <div className="p-4 flex justify-between items-center">
+          <div className="text-xl font-bold">Menu</div>
+          <button onClick={toggleSidebar}>
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+        <nav className="flex flex-col space-y-4 p-4">
+          {["Home", "Why Us", "Properties", "Services", "Contact"].map(
+            (item) => (
+              <ScrollLink
+                key={item}
+                to={item.toLowerCase().replace(" ", "-")}
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                className="hover:bg-blue-700 p-2 rounded transition-colors duration-300"
+                onClick={toggleSidebar}
+              >
+                {item}
+              </ScrollLink>
+            )
+          )}
+        </nav>
+      </div>
+
+      {/* Hero Section */}
+      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+            alt="Hero Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
+          <motion.h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="relative inline-block mb-2 md:mb-0">
+              <span>Discover your dream</span>
+              <motion.div
+                className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-400 via-blue-500 to-blue-300 rounded-full"
+                initial={{ width: 0, left: "50%" }}
+                animate={{ width: "100%", left: "0%" }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              />
+            </div>{" "}
+            <div className="relative inline-block mt-2 md:mt-0">
+              <span>home with us</span>
+              <motion.div
+                className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-300 via-blue-500 to-blue-400 rounded-full"
+                initial={{ width: 0, left: "50%" }}
+                animate={{ width: "100%", left: "0%" }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              />
+            </div>
+          </motion.h1>
+
+          <motion.p
+            className="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-          />
-        </AnimatePresence>
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-                <span className="relative inline-block">
-                  Discover
-                  <motion.span 
-                    className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                  />
-                </span>{" "}
-                <span className="relative inline-block">
-                  Your
-                  <motion.span 
-                    className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ delay: 0.6, duration: 0.8 }}
-                  />
-                </span>{" "}
-                <span className="block mt-2">
-                  <span className="relative inline-block">
-                    Eco-Friendly
-                    <motion.span 
-                      className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 0.8, duration: 0.8 }}
-                    />
-                  </span>{" "}
-                  <span className="relative inline-block">
-                    Dream Home
-                    <motion.span 
-                      className="absolute -bottom-2 left-0 right-0 h-1 bg-emerald-400 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 1.0, duration: 0.8 }}
-                    />
-                  </span>
-                </span>
-              </h2>
-              <motion.p 
-                className="text-xl md:text-2xl font-light mb-8 text-white"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-              >
-                <span className="relative inline-block px-2 py-1">
-                  <span className="relative z-10">Sustainable living in harmony with nature</span>
-                  <span className="absolute inset-0 bg-emerald-600/20 backdrop-blur-sm rounded-lg -skew-x-3"></span>
-                </span>
-              </motion.p>
-              {/* <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4, duration: 0.5 }}
-              >
-                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300">
-                  Explore Properties
-                </Button>
-              </motion.div> */}
-            </motion.div>
-          </div>
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            Your Dream Our Priority
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg font-medium shadow-lg hover:shadow-4xl transition-all duration-300 relative overflow-hidden group">
+              <span className="relative z-10">Explore Properties</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            </Button>
+          </motion.div>
         </div>
-      </section>
+
+        <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="flex flex-col items-center"
+          >
+            <span className="text-white text-sm mb-2">Scroll to explore</span>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <ChevronDown className="w-6 h-6 text-white" />
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
 
       {/* About Us Section (replacing Get Started) */}
-      <div className="bg-[#e6f7e9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
+      <div className="bg-[#e6f0f9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
         <div className="max-w-6xl mx-auto space-y-8">
           <h2 className="relative text-4xl font-bold text-center mb-12">
             <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
-              <span className="relative text-[#2e7d32]">Why Us</span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+              <span className="relative text-[#1e40af]">Why Us</span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
             </span>
           </h2>
           <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
-            <p className="text-[#1b5e20] text-xl leading-relaxed">
-              Welcome to AS Property Management, where dreams find their perfect address!
+            <p className="text-[#1e3a8a] text-xl leading-relaxed">
+              Welcome to AS Property Management, where dreams find their perfect
+              address!
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
               We are more than just a real estate platform—we are your trusted
@@ -303,133 +389,108 @@ function App() {
               with personalized service to make it happen.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              Our platform connects buyers, sellers, and renters through a
-              seamless, user-friendly experience powered by cutting-edge
-              technology. With a deep understanding of local markets and a
-              commitment to transparency, we empower you to make informed
-              decisions with confidence.
+              From premium flats in urban centers to strategic land investments
+              with high growth potential, our diverse portfolio caters to both
+              homebuyers and investors seeking value.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              At AS Property Management, we value relationships as much as transactions. Let us
-              help you find not just a property but a place to thrive.
+              At AS Property Management, we value relationships as much as
+              transactions. Let us help you find not just a property but a place
+              to thrive.
             </p>
-            <p className="text-[#2e7d32] font-semibold text-2xl text-center">
+            <p className="text-[#1e40af] font-semibold text-2xl text-center">
               Your journey starts here!
             </p>
           </div>
-          {/* <div className="grid gap-6 md:grid-cols-3">
-            <Card className="bg-white border-none shadow-md">
-              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
-                <Users className="w-12 h-12 text-[#4caf50] mb-4" />
-                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
-                  Trusted Partners
-                </h4>
-                <p className="text-gray-600">
-                  Building lasting relationships with our clients and community
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white border-none shadow-md">
-              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
-                <TrendingUp className="w-12 h-12 text-[#4caf50] mb-4" />
-                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
-                  Market Insights
-                </h4>
-                <p className="text-gray-600">
-                  Providing you with the latest trends and data-driven decisions
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-white border-none shadow-md">
-              <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
-                <Zap className="w-12 h-12 text-[#4caf50] mb-4" />
-                <h4 className="text-[#2e7d32] font-semibold text-xl mb-2">
-                  Innovative Tech
-                </h4>
-                <p className="text-gray-600">
-                  Leveraging cutting-edge technology for a seamless experience
-                </p>
-              </CardContent>
-            </Card>
-          </div> */}
         </div>
       </div>
-
 
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <PropertyCarousel />
       </div>
 
-      {/* Featured Properties */}
-      <section className="py-20 bg-emerald-50">
-      <div className="container mx-auto px-4">
-        <h2 className="relative text-4xl font-bold text-center mb-12">
-          <span className="inline-flex items-center">
-            <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
-            <span className="relative text-[#1b5e20]">Featured Eco-Friendly Properties</span>
-            <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
-          </span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {realEstateProperties.map((data, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <Card className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-0 relative">
-                  <div className="relative h-64 overflow-hidden">
+      {/* Featured Eco-Friendly Properties */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            <span className="inline-flex items-center">
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+              <span className="relative text-[#1e40af] drop-shadow-sm">
+                Featured Eco-Friendly Properties
+              </span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+            </span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {realEstateProperties.map((data, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="group"
+              >
+                <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+                  <div className="relative h-64 overflow-hidden aspect-[16/9] rounded-t-xl">
                     <img
                       src={data.image}
-                      alt={`Eco-friendly Property: ${data.name}`}
-                      className="w-full h-full object-cover"
+                      alt={data.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-blue-900/20 to-transparent opacity-50 group-hover:opacity-90 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 w-full p-4">
+                      <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-16 pb-2 px-4 -mx-4 -mb-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="text-white text-xl font-bold">
+                            {data.name}
+                          </h3>
+                          
+                          {data.price ? (
+                            <span className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg">
+                              {data?.price}
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <p className="text-blue-100 flex items-center text-sm mb-2">
+                          <MapPin className="w-4 h-4 mr-1 text-blue-200 flex-shrink-0" />
+                          <span className="truncate">{data.address}</span>
+                        </p>
+                        {data?.description ? (
+                          <p className="text-gray-200 text-sm line-clamp-2">
+                            {data?.description}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <h3 className="text-2xl font-bold mb-2 drop-shadow-md">
-                      {data.name}
-                    </h3>
-                    <p className="text-sm mb-2 drop-shadow-md">
-                      {data.address}
-                    </p>
-                    <ul className="flex flex-wrap gap-2">
-                      {data.ecoFeatures.map((feature, index) => (
-                        <li
-                          key={index}
-                          className="bg-emerald-600 text-white text-xs px-2 py-1 rounded-full flex items-center shadow-md"
-                        >
-                          <MapPin className="w-3 h-3 mr-1 text-orange-200" />
-                          <span className="font-medium">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Services Section */}
 
-      <section ref={ref} className="bg-emerald-50 py-20 overflow-hidden">
+      <section ref={ref} className="bg-white py-20 overflow-hidden">
         <div className="container mx-auto px-4">
           <motion.h2
-            className="relative text-4xl font-bold text-center mb-12"
+            className="text-4xl font-bold text-center mb-16"
             initial={{ opacity: 0, y: -20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
-              <span className="relative text-[#1b5e20]">Our Eco-Friendly Services</span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
-            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              <span className="inline-flex items-center">
+                <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+                <span className="relative text-[#1e40af]">
+                  Our Professional Services
+                </span>
+                <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+              </span>
+            </h2>
           </motion.h2>
           <motion.div
             variants={containerVariants}
@@ -439,42 +500,42 @@ function App() {
           >
             {[
               {
-                icon: <Home className="w-16 h-16" />,
+                icon: <Home className="w-10 h-10" />,
                 title: "Flat Sale",
                 description:
-                  "Find your perfect apartment with our extensive selection of premium flats across West Bengal.",
-                category: "Residential",
+                  "Find your dream flat with our extensive listings across West Bengal, featuring premium properties in prime locations.",
+                category: "Sales",
               },
               {
-                icon: <MapPin className="w-16 h-16" />,
+                icon: <Map className="w-10 h-10" />,
                 title: "Land Sale",
                 description:
-                  "Invest in prime plots and land parcels in strategic locations with high growth potential.",
-                category: "Investment",
+                  "Invest in high-potential land parcels with clear titles and excellent appreciation prospects throughout the region.",
+                category: "Sales",
               },
               {
-                icon: <DollarSign className="w-16 h-16" />,
+                icon: <Banknote className="w-10 h-10" />,
                 title: "Home Loan",
                 description:
-                  "Access competitive home loan options with our network of trusted financial partners.",
+                  "Access competitive home loan options through our network of trusted financial partners with simplified processing.",
                 category: "Finance",
               },
               {
-                icon: <FileText className="w-16 h-16" />,
+                icon: <Scale className="w-10 h-10" />,
                 title: "Legal Assistance",
                 description:
-                  "Expert legal guidance for property documentation, verification, and dispute resolution.",
-                category: "Legal",
+                  "Our expert legal team provides comprehensive assistance for verification, documentation, and dispute resolution.",
+                category: "Support",
               },
               {
-                icon: <Paintbrush className="w-16 h-16" />,
+                icon: <Paintbrush className="w-10 h-10" />,
                 title: "Interior Design",
                 description:
-                  "Transform your property with our professional interior design and renovation services.",
+                  "Transform your property with our professional interior design services that blend aesthetics with functionality.",
                 category: "Design",
               },
               {
-                icon: <Eye className="w-16 h-16" />,
+                icon: <Eye className="w-10 h-10" />,
                 title: "Property Visits",
                 description:
                   "Schedule guided property tours with our experts who provide comprehensive information and personalized assistance.",
@@ -482,43 +543,26 @@ function App() {
               },
             ].map((service, index) => (
               <motion.div key={index} variants={cardVariants}>
-                <Card className="overflow-hidden bg-gradient-to-br from-emerald-50 to-white hover:shadow-lg transition-shadow duration-300">
-                  <CardContent className="p-0">
-                    <div className="relative h-40 bg-emerald-600 overflow-hidden">
-                      <motion.div
-                        className="absolute inset-0 flex items-center justify-center text-white"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: 0.2, duration: 0.3 }}
-                      >
+                <Card className="h-full border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0 p-3 rounded-lg bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-100 group-hover:scale-110 group-hover:rotate-3">
                         {service.icon}
-                      </motion.div>
-                      <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-emerald-600 to-transparent"
-                        initial={{ y: "100%" }}
-                        animate={{ y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.4 }}
-                      />
-                    </div>
-                    <div className="p-6">
-                      <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.4, duration: 0.3 }}
-                      >
+                      </div>
+                      <div className="flex-1">
                         <Badge
-                          variant="secondary"
-                          className="mb-2 bg-emerald-100 text-emerald-800"
+                          variant="outline"
+                          className="mb-2 text-blue-600 bg-blue-50 border-blue-200 transition-all duration-300 group-hover:bg-blue-100"
                         >
                           {service.category}
                         </Badge>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                        <h3 className="text-xl font-bold text-gray-800 mb-2 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-700">
                           {service.title}
                         </h3>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-gray-600 transition-all duration-300 group-hover:text-gray-700">
                           {service.description}
                         </p>
-                      </motion.div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -531,11 +575,11 @@ function App() {
       {/* Contact Form */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-8">
-          <h2 className="relative text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
             <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-emerald-500 rounded-full mr-4"></span>
-              <span className="relative text-gray-800">Contact Us</span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-emerald-500 rounded-full ml-4"></span>
+              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+              <span className="relative text-[#1e40af]">Conatct Us</span>
+              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
             </span>
           </h2>
           <div className="max-w-2xl mx-auto">
@@ -570,7 +614,8 @@ function App() {
                   htmlFor="terms"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  I accept the terms and conditions
+                  I Authorize AS Property to send notifications via
+                  Email/Call/SMS/Rcs/Whatsapp
                 </label>
               </div>
               <Dialog>
@@ -631,7 +676,7 @@ function App() {
               </Dialog>
               <Button
                 type="submit"
-                className="w-full bg-emerald-600 hover:bg-emerald-700"
+                className="w-full bg-gradient-to-r from-transparent to-blue-500 hover:bg-blue-600"
                 disabled={!acceptTerms}
               >
                 Send Message
@@ -651,13 +696,13 @@ function App() {
               exit={{ scale: 0, opacity: 0 }}
               whileHover={{ scale: 1.1 }}
               onClick={() => setIsChatOpen(true)}
-              className="bg-emerald-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-6xl flex items-center justify-center"
             >
               <MessageSquare className="h-6 w-6" />
             </motion.button>
           )}
         </AnimatePresence>
-        
+
         <AnimatePresence>
           {isChatOpen && (
             <motion.div
@@ -666,46 +711,59 @@ function App() {
               exit={{ opacity: 0, y: 50, scale: 0.9 }}
               className="absolute bottom-0 right-0 w-80 sm:w-96 bg-white rounded-lg shadow-xl overflow-hidden"
             >
-              <div className="bg-emerald-600 text-white p-4 flex justify-between items-center">
+              <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
                 <h3 className="font-medium">Send us an inquiry</h3>
-                <button 
+                <button
                   onClick={() => setIsChatOpen(false)}
-                  className="text-white hover:bg-emerald-700 rounded-full p-1"
+                  className="text-white hover:bg-blue-700 rounded-full p-1"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              
+
               <div className="p-4">
                 <form className="space-y-4">
                   <div>
                     <Label htmlFor="chat-name">Name</Label>
-                    <Input id="chat-name" placeholder="Your name" className="mt-1" />
+                    <Input
+                      id="chat-name"
+                      placeholder="Your name"
+                      className="mt-1"
+                    />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="chat-email">Email</Label>
-                    <Input id="chat-email" type="email" placeholder="Your email" className="mt-1" />
+                    <Input
+                      id="chat-email"
+                      type="email"
+                      placeholder="Your email"
+                      className="mt-1"
+                    />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="chat-phone">Phone</Label>
-                    <Input id="chat-phone" placeholder="Your phone number" className="mt-1" />
+                    <Input
+                      id="chat-phone"
+                      placeholder="Your phone number"
+                      className="mt-1"
+                    />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="chat-message">Message</Label>
-                    <Textarea 
-                      id="chat-message" 
-                      placeholder="How can we help you?" 
+                    <Textarea
+                      id="chat-message"
+                      placeholder="How can we help you?"
                       className="mt-1 resize-none"
                       rows={3}
                     />
                   </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-emerald-600 hover:bg-emerald-700"
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700"
                   >
                     Send Message
                   </Button>
@@ -717,46 +775,212 @@ function App() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">AS Property Management</h3>
-              <p className="mb-4">
-                Your trusted partner in finding the perfect eco-friendly home.
+              <h3 className="text-xl font-bold mb-4">AS Property</h3>
+              <p className="text-gray-400 mb-4">
+                Your trusted partner for real estate solutions across West
+                Bengal.
               </p>
-              <p>
-                © 2024 AS Property Management. All rights reserved | Designed and maintained by
-                Princeglobe{" "}
-              </p>
+              <div className="flex space-x-4">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61560450938328&mibextid=ZbWKwL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-500 transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-facebook"
+                  >
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                  </svg>
+                </a>
+            
+                <a
+                  href="https://www.instagram.com/aspropertie2023?igsh=OGQ5ZDc2ODk2ZA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-pink-500 transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-instagram"
+                  >
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                  </svg>
+                </a>
+                {/* <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-blue-600 transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-linkedin"
+                  >
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </a> */}
+                <a
+                  href="https://youtube.com/@aspropertymanagement-li1ht?si=kfy-tDOZyzE5jWXF"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-red-600 transition-colors duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-youtube"
+                  >
+                    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                    <path d="m10 15 5-3-5-3z" />
+                  </svg>
+                </a>
+              </div>
             </div>
+
             <div>
-              <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+              <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                {["Home", "Why Us", "Featured", "Services", "Contact"].map((item) => (
+                {["Home", "Properties", "Services", "About Us", "Contact"].map(
+                  (item) => (
+                    <li key={item}>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4">Our Services</h3>
+              <ul className="space-y-2">
+                {[
+                  "Flat Sale",
+                  "Land Sale",
+                  "Home Loan",
+                  "Legal Assistance",
+                  "Interior Design",
+                  "Property Visits",
+                ].map((item) => (
                   <li key={item}>
-                    <a href="#" className="hover:text-emerald-400">
+                    <a
+                      href="#"
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                    >
                       {item}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
+
             <div>
-              <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
-              <p className="flex items-center mb-2">
-                <MapPin className="mr-2" /> 19/a/3/a D. J. Bye Lane (W) , Konnagar,  Hooghly.  712235.
-              </p>
-              <p className="flex items-center mb-2">
-                <MapPin className="mr-2" /> 1/232 Naktala , Kolkata 700047. 
-              </p>
-              <p className="flex items-center mb-2">
-                <Phone className="mr-2" /> (+91) 9051396162,   (+91) 9123699601
-              </p>
-              <p className="flex items-center">
-                <Mail className="mr-2" /> aspropertymanagement2023@gmail.com
-              </p>
+              <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+              <address className="not-italic text-gray-400">
+                <p className="flex items-start mb-2">
+                  <MapPin className="w-5 h-5 mr-2 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span>
+                    19/a/3/a D. J. Bye Lane (W),<br />
+                    Konnagar, Hooghly, 712235.
+                  </span>
+                </p>
+                <p className="flex items-start mb-2">
+                  <MapPin className="w-5 h-5 mr-2 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span>
+                    1/232 Naktala,<br />
+                    Kolkata, 700047.
+                  </span>
+                </p>
+                <p className="flex items-center mb-2">
+                  <Phone className="w-5 h-5 mr-2 text-blue-400" />
+                  <a
+                    href="tel:+919051396162"
+                    className="hover:text-blue-400 transition-colors duration-300"
+                  >
+                    (+91) 9051396162
+                  </a>
+                  <span className="mx-2">,</span>
+                  <a
+                    href="tel:+919123699601"
+                    className="hover:text-blue-400 transition-colors duration-300"
+                  >
+                    (+91) 9123699601
+                  </a>
+                </p>
+                <p className="flex items-center">
+                  <Mail className="w-5 h-5 mr-2 text-blue-400" />
+                  <a
+                    href="mailto:aspropertymanagement2023@gmail.com"
+                    className="hover:text-blue-400 transition-colors duration-300"
+                  >
+                    aspropertymanagement2023@gmail.com
+                  </a>
+                </p>
+              </address>
             </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+            <p className="mb-2">
+              &copy; {new Date().getFullYear()} AS Property Management. All
+              rights reserved.
+            </p>
+            <p>
+              Designed and Developed by{" "}
+              <a
+                href="https://princeglobe.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 transition-colors duration-300 font-medium"
+              >
+                Prince Globe
+              </a>
+            </p>
           </div>
         </div>
       </footer>

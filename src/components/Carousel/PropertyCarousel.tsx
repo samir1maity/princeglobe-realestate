@@ -1,15 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, MapPin, Home } from 'lucide-react';
-import kolkata_s1 from '../../assets/properties/kolkata-s1.jpeg'
-import kolkata_s2 from '../../assets/properties/kolkata-s2.jpeg'
-import kolkata_s3 from '../../assets/properties/kolkata-s3.jpeg'
-import kolkata_s4 from '../../assets/properties/kolkata-s4.jpeg'
+import bolra_1 from '../../assets/properties/boral_1.jpeg'
+import garia_1 from '../../assets/properties/garia_1.jpeg'
+import garia_2 from '../../assets/properties/garia_2.jpeg'
+import gt_road from '../../assets/properties/gt_road.jpeg'
 
 interface Property {
   id: number;
   image: string;
-  title: string;
+  // title: string;
   price: string;
   location: string;
   area: string;
@@ -19,39 +19,39 @@ interface Property {
 const properties: Property[] = [
   {
     id: 1,
-    image: kolkata_s1,
-    title: 'Premium Riverside Villa',
-    price: '₹30 Lakhs',
-    location: 'Konnagar, Hooghly',
-    area: 'West Bengal',
-    type: 'Villa'
+    image: bolra_1,
+    // title: 'Premium Riverside Villa',
+    price: '₹3700/- per sqft',
+    location: 'Behind Boral High School',
+    area: 'Boral, West Bengal',
+    type: 'Apartment'
   },
   {
     id: 2,
-    image: kolkata_s2,
-    title: 'Modern Apartment Complex',
-    price: '₹30 Lakhs',
-    location: 'Garia, South Kolkata',
-    area: 'West Bengal',
+    image: garia_1,
+    // title: 'Modern Apartment Complex',
+    price: '₹3600/- per sqft',
+    location: 'Satindra Pally, Garia',
+    area: 'Garia, West Bengal',
     type: 'Apartment'
   },
   {
     id: 3,
-    image: kolkata_s3,
-    title: 'Luxury Garden Residence',
-    price: '₹30 Lakhs',
-    location: 'Boral, South Kolkata',
-    area: 'West Bengal',
-    type: 'Bungalow'
+    image: garia_2,
+    // title: 'Luxury Garden Residence',
+    price: '₹3700/- per sqft',
+    location: 'Satindra Pally,1/2/3 bhk available',
+    area: 'Garia, West Bengal',
+    type: 'Apartment'
   },
   {
     id: 4,
-    image: kolkata_s4,
-    title: 'Riverside Heritage Home',
-    price: '₹30 Lakhs',
-    location: 'Chandannagar, Hooghly',
+    image: gt_road,
+    // title: 'Riverside Heritage Home',
+    price: '₹18 Lakhs/2bhk available',
+    location: 'G T Road,  Ganga View',
     area: 'West Bengal',
-    type: 'Heritage'
+    type: 'Flat'
   }
 ];
 
@@ -98,12 +98,12 @@ const PropertyCarousel = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-br from-[#059669] to-[#0ba876] p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl">
+    <div className="relative w-full overflow-hidden bg-gradient-to-br from-[#1e40af] to-[#3b82f6] p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80')] opacity-5 bg-cover bg-center" />
       
       <h2 className="relative text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 md:mb-8 lg:mb-12 border-l-4 border-orange-500 pl-4 md:pl-6">
         FEATURED PROPERTIES
-        <span className="block text-xs sm:text-sm font-normal text-orange-400 mt-1 md:mt-2">
+        <span className="block text-sm sm:text-sm font-normal text-orange-400 mt-1 md:mt-2">
           Discover Your Dream Home in West Bengal
         </span>
       </h2>
@@ -128,7 +128,7 @@ const PropertyCarousel = () => {
               <div className="w-full md:w-2/3 relative overflow-hidden rounded-2xl group">
                 <motion.img
                   src={properties[page].image}
-                  alt={properties[page].title}
+                  // alt={properties[page].title}
                   className="w-full h-full object-cover"
                   initial={{ scale: 1 }}
                   animate={{ scale: 1.05 }}
@@ -141,7 +141,7 @@ const PropertyCarousel = () => {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{properties[page].title}</h3>
+                  {/* <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{properties[page].title}</h3> */}
                   <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white mb-2 sm:mb-4">
                     <div className="flex items-center gap-1 bg-black/30 px-2 py-1 rounded-full">
                       <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
@@ -153,7 +153,7 @@ const PropertyCarousel = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-1 sm:gap-2 text-lg sm:text-xl md:text-2xl font-bold">
-                    <span className="bg-emerald-600/90 px-3 py-1 rounded-lg flex items-center">
+                    <span className="bg-blue-600/90 px-3 py-1 rounded-lg flex items-center">
                       {/* <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> */}
                       {properties[page].price}
                     </span>
@@ -176,12 +176,12 @@ const PropertyCarousel = () => {
                     >
                       <img
                         src={property.image}
-                        alt={property.title}
+                        // alt={property.title}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
                       <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 md:p-4 text-white">
-                        <h4 className="text-sm sm:text-base md:text-lg font-semibold line-clamp-1 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">{property.title}</h4>
+                        {/* <h4 className="text-sm sm:text-base md:text-lg font-semibold line-clamp-1 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">{property.title}</h4> */}
                         <p className="text-xs sm:text-sm bg-black/30 text-white inline-block px-2 py-0.5 rounded-full mt-1 line-clamp-1">{property.location}</p>
                       </div>
                     </motion.div>
