@@ -51,7 +51,7 @@ import { Link as ScrollLink } from "react-scroll";
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // const [setCurrentImageIndex] = useState(0);
   // const [isHovered, setIsHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -141,28 +141,28 @@ function App() {
   };
 
 
-  const images = [
-    "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/1438832/pexels-photo-1438832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  ];
+  // const images = [
+  //   "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   "https://images.pexels.com/photos/1438832/pexels-photo-1438832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  // ];
 
-  useEffect(() => {
-    const imageInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
+  // useEffect(() => {
+  //   const imageInterval = setInterval(() => {
+  //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  //   }, 5000);
 
-    return () => {
-      clearInterval(imageInterval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(imageInterval);
+  //   };
+  // }, []);
 
-  const navItems = [
-    { name: "Home", to: "home", offset: -100 },
-    { name: "Why Us", to: "why-us", offset: -80 },
-    { name: "Properties", to: "properties", offset: -80 },
-    { name: "Services", to: "services", offset: -80 },
-    { name: "Contact", to: "contact", offset: -80 }
-  ];
+  // const navItems = [
+  //   { name: "Home", to: "home", offset: -100 },
+  //   { name: "Why Us", to: "why-us", offset: -80 },
+  //   { name: "Properties", to: "properties", offset: -80 },
+  //   { name: "Services", to: "services", offset: -80 },
+  //   { name: "Contact", to: "contact", offset: -80 }
+  // ];
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
