@@ -164,12 +164,6 @@ function App() {
   //   { name: "Contact", to: "contact", offset: -80 }
   // ];
 
-  console.log('isSidebarOpen', isSidebarOpen)
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -177,7 +171,7 @@ function App() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className={`fixed w-full z-[99999] top-0 transition-all duration-300 ${
+        className={`fixed w-full z-[999] top-0 transition-all duration-300 ${
           isScrolled ? "bg-white" : "bg-transparent"
         }`}
       >
@@ -224,14 +218,17 @@ function App() {
               )}
             </motion.ul>
           </nav>
-          <Sheet>
-          {isSidebarOpen ? null : (
+          <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
-                  <Menu className="h-6 w-6" />
-                </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="md:hidden"
+                onClick={() => setIsSidebarOpen(true)}
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
             </SheetTrigger>
-          )}
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>AS Property Management</SheetTitle>
@@ -249,12 +246,16 @@ function App() {
                     "Contact Us",
                   ].map((item) => (
                     <li key={item} className="flex items-center justify-center">
-                      <a
-                        href="#"
+                      <Link
+                        to={item}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
                         className="text-gray-600 hover:text-emerald-600"
+                        onClick={() => setIsSidebarOpen(false)}
                       >
                         {item}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -265,8 +266,8 @@ function App() {
       </motion.header>
 
       {/* Sidebar for Mobile */}
-      <div
-        className={`fixed inset-y-0 left-0 z-40 w-64 bg-blue-800 text-white transform ${
+      {/* <div
+        className={`fixed inset-y-0 left-0 z-1000 w-64 bg-blue-800 text-white transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out md:hidden`}
       >
@@ -294,7 +295,7 @@ function App() {
             )
           )}
         </nav>
-      </div>
+      </div> */}
 
       {/* Hero Section */}
       <Element name="Home">
