@@ -43,11 +43,11 @@ import PropertyCarousel from "./components/Carousel/PropertyCarousel";
 import logo from "./assets/icons/as 3d png.png";
 import konnagar1 from "./assets/properties/konnagar1.jpeg";
 import konnagar_2 from "./assets/properties/konnagar_2.jpeg";
-import hindmotor from "./assets/properties/hindmototr1.jpeg";
+import gt_road from './assets/properties/gt_road.jpeg'
 import eco_cast from "./assets/properties/eco_cast.jpeg";
 import muktu from "./assets/properties/muktu.jpeg";
 import dooars from "./assets/properties/dooars.jpeg";
-import { Link as ScrollLink } from "react-scroll";
+import { Link, Element } from 'react-scroll';
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -70,7 +70,7 @@ function App() {
   const realEstateProperties = [
     {
       name: "Master para project",
-      address: "Bolpur, Santiniketan",
+      address: "konnagar, Hoogly",
       image: konnagar1,
       price: "₹2700/- per sqft",
       description: "1/2/3 bhk available",
@@ -85,7 +85,7 @@ function App() {
     {
       name: "Hindmotor",
       address: "Dooars, Jalpaiguri",
-      image: hindmotor,
+      image: gt_road,
       ecoFeatures: ["Green Roof", "Recycled Materials", "Solar Water Heating"],
       price: "₹2700/- per sqft.",
       description:
@@ -164,6 +164,8 @@ function App() {
   //   { name: "Contact", to: "contact", offset: -80 }
   // ];
 
+  console.log('isSidebarOpen', isSidebarOpen)
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -206,25 +208,30 @@ function App() {
                     whileHover={{ scale: 1.1 }}
                     className="flex items-center justify-center"
                   >
-                    <a
-                      href="#"
+                    <Link
+                      smooth={true} 
+                      offset={50} 
+                      duration={500} 
+                      to={item}
                       className={`${
                         isScrolled ? "text-gray-600" : "text-white"
                       } hover:text-emerald-600`}
                     >
                       {item}
-                    </a>
+                    </Link>
                   </motion.li>
                 )
               )}
             </motion.ul>
           </nav>
           <Sheet>
+          {isSidebarOpen ? null : (
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-6 w-6" />
-              </Button>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-6 w-6" />
+                </Button>
             </SheetTrigger>
+          )}
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>AS Property Management</SheetTitle>
@@ -237,7 +244,7 @@ function App() {
                   {[
                     "Home",
                     "Why Us",
-                    "Featured Properties",
+                    "Featured",
                     "Services",
                     "Contact Us",
                   ].map((item) => (
@@ -270,11 +277,11 @@ function App() {
           </button>
         </div>
         <nav className="flex flex-col space-y-4 p-4">
-          {["Home", "Why Us", "Properties", "Services", "Contact"].map(
+          {["Home", "Why Us", "Featured", "Services", "Contact"].map(
             (item) => (
-              <ScrollLink
+              <Link
                 key={item}
-                to={item.toLowerCase().replace(" ", "-")}
+                to={item}
                 spy={true}
                 smooth={true}
                 offset={-70}
@@ -283,408 +290,422 @@ function App() {
                 onClick={toggleSidebar}
               >
                 {item}
-              </ScrollLink>
+              </Link>
             )
           )}
         </nav>
       </div>
 
       {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
-            alt="Hero Background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
+      <Element name="Home">
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80"
+              alt="Hero Background"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="relative inline-block mb-2 md:mb-0">
-              <span>Discover your dream</span>
-              <motion.div
-                className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-400 via-blue-500 to-blue-300 rounded-full"
-                initial={{ width: 0, left: "50%" }}
-                animate={{ width: "100%", left: "0%" }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              />
-            </div>{" "}
-            <div className="relative inline-block mt-2 md:mt-0">
-              <span>home with us</span>
-              <motion.div
-                className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-300 via-blue-500 to-blue-400 rounded-full"
-                initial={{ width: 0, left: "50%" }}
-                animate={{ width: "100%", left: "0%" }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              />
-            </div>
-          </motion.h1>
-
-          <motion.p
-            className="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            Your Dream Our Priority
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg font-medium shadow-lg hover:shadow-4xl transition-all duration-300 relative overflow-hidden group">
-              <span className="relative z-10">Explore Properties</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            </Button>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-10 left-0 right-0 flex justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="flex flex-col items-center"
-          >
-            <span className="text-white text-sm mb-2">Scroll to explore</span>
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
+          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center text-white">
+            <motion.h1
+              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <ChevronDown className="w-6 h-6 text-white" />
+              <div className="relative inline-block mb-2 md:mb-0">
+                <span>Discover your dream</span>
+                <motion.div
+                  className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-400 via-blue-500 to-blue-300 rounded-full"
+                  initial={{ width: 0, left: "50%" }}
+                  animate={{ width: "100%", left: "0%" }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                />
+              </div>{" "}
+              <div className="relative inline-block mt-2 md:mt-0">
+                <span>home with us</span>
+                <motion.div
+                  className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-300 via-blue-500 to-blue-400 rounded-full"
+                  initial={{ width: 0, left: "50%" }}
+                  animate={{ width: "100%", left: "0%" }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                />
+              </div>
+            </motion.h1>
+
+            <motion.p
+              className="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-200"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              Your Dream Our Priority
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+            >
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-full text-lg font-medium shadow-lg hover:shadow-4xl transition-all duration-300 relative overflow-hidden group">
+                <span className="relative z-10">Explore Properties</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </Button>
             </motion.div>
-          </motion.div>
+          </div>
+
+          <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="flex flex-col items-center"
+            >
+              <span className="text-white text-sm mb-2">Scroll to explore</span>
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                <ChevronDown className="w-6 h-6 text-white" />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </Element>
 
       {/* About Us Section (replacing Get Started) */}
-      <div className="bg-[#e6f0f9] min-h-screen w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <h2 className="relative text-4xl font-bold text-center mb-12">
-            <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
-              <span className="relative text-[#1e40af]">Why Us</span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
-            </span>
-          </h2>
-          <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
-            <p className="text-[#1e3a8a] text-xl leading-relaxed">
-              Welcome to AS Property Management, where dreams find their perfect
-              address!
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              We are more than just a real estate platform—we are your trusted
-              partners in navigating the dynamic property market. Whether you're
-              searching for your dream home, a lucrative investment opportunity,
-              or a commercial space that inspires growth, we combine innovation
-              with personalized service to make it happen.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              From premium flats in urban centers to strategic land investments
-              with high growth potential, our diverse portfolio caters to both
-              homebuyers and investors seeking value.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              At AS Property Management, we value relationships as much as
-              transactions. Let us help you find not just a property but a place
-              to thrive.
-            </p>
-            <p className="text-[#1e40af] font-semibold text-2xl text-center">
-              Your journey starts here!
-            </p>
+      <Element name="Why Us">
+        <div className="bg-[#e6f0f9] min-h-[85vh] w-full p-4 md:p-8 lg:p-12 flex flex-col justify-center">
+          <div className="max-w-6xl mx-auto space-y-8">
+            <h2 className="relative text-4xl font-bold text-center mb-12">
+              <span className="inline-flex items-center">
+                <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+                <span className="relative text-[#1e40af]">Why Us</span>
+                <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+              </span>
+            </h2>
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
+              <p className="text-[#1e3a8a] text-xl leading-relaxed">
+                Welcome to AS Property Management, where dreams find their perfect
+                address!
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                We are more than just a real estate platform—we are your trusted
+                partners in navigating the dynamic property market. Whether you're
+                searching for your dream home, a lucrative investment opportunity,
+                or a commercial space that inspires growth, we combine innovation
+                with personalized service to make it happen.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                From premium flats in urban centers to strategic land investments
+                with high growth potential, our diverse portfolio caters to both
+                homebuyers and investors seeking value.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                At AS Property Management, we value relationships as much as
+                transactions. Let us help you find not just a property but a place
+                to thrive.
+              </p>
+              <p className="text-[#1e40af] font-semibold text-2xl text-center">
+                Your journey starts here!
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </Element>
 
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <PropertyCarousel />
-      </div>
+      <Element name='Properties'>
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <PropertyCarousel />
+        </div>
+      </Element>
 
       {/* Featured Eco-Friendly Properties */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
-              <span className="relative text-[#1e40af] drop-shadow-sm">
-                Featured Eco-Friendly Properties
-              </span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
-            </span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {realEstateProperties.map((data, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                className="group"
-              >
-                <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
-                  <div className="relative h-64 overflow-hidden aspect-[16/9] rounded-t-xl">
-                    <img
-                      src={data.image}
-                      alt={data.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-blue-900/20 to-transparent opacity-50 group-hover:opacity-90 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 left-0 w-full p-4">
-                      <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-16 pb-2 px-4 -mx-4 -mb-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="text-white text-xl font-bold">
-                            {data.name}
-                          </h3>
-                          
-                          {data.price ? (
-                            <span className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg">
-                              {data?.price}
-                            </span>
-                          ) : null}
-                        </div>
-
-                        <p className="text-blue-100 flex items-center text-sm mb-2">
-                          <MapPin className="w-4 h-4 mr-1 text-blue-200 flex-shrink-0" />
-                          <span className="truncate">{data.address}</span>
-                        </p>
-                        {data?.description ? (
-                          <p className="text-gray-200 text-sm line-clamp-2">
-                            {data?.description}
-                          </p>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-
-      <section ref={ref} className="bg-white py-20 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.h2
-            className="text-4xl font-bold text-center mb-16"
-            initial={{ opacity: 0, y: -20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-            transition={{ duration: 0.6 }}
-          >
+      <Element name='Featured'>
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               <span className="inline-flex items-center">
                 <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
-                <span className="relative text-[#1e40af]">
-                  Our Professional Services
+                <span className="relative text-[#1e40af] drop-shadow-sm">
+                  Featured Eco-Friendly Properties
                 </span>
                 <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
               </span>
             </h2>
-          </motion.h2>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {[
-              {
-                icon: <Home className="w-10 h-10" />,
-                title: "Flat Sale",
-                description:
-                  "Find your dream flat with our extensive listings across West Bengal, featuring premium properties in prime locations.",
-                category: "Sales",
-              },
-              {
-                icon: <Map className="w-10 h-10" />,
-                title: "Land Sale",
-                description:
-                  "Invest in high-potential land parcels with clear titles and excellent appreciation prospects throughout the region.",
-                category: "Sales",
-              },
-              {
-                icon: <Banknote className="w-10 h-10" />,
-                title: "Home Loan",
-                description:
-                  "Access competitive home loan options through our network of trusted financial partners with simplified processing.",
-                category: "Finance",
-              },
-              {
-                icon: <Scale className="w-10 h-10" />,
-                title: "Legal Assistance",
-                description:
-                  "Our expert legal team provides comprehensive assistance for verification, documentation, and dispute resolution.",
-                category: "Support",
-              },
-              {
-                icon: <Paintbrush className="w-10 h-10" />,
-                title: "Interior Design",
-                description:
-                  "Transform your property with our professional interior design services that blend aesthetics with functionality.",
-                category: "Design",
-              },
-              {
-                icon: <Eye className="w-10 h-10" />,
-                title: "Property Visits",
-                description:
-                  "Schedule guided property tours with our experts who provide comprehensive information and personalized assistance.",
-                category: "Support",
-              },
-            ].map((service, index) => (
-              <motion.div key={index} variants={cardVariants}>
-                <Card className="h-full border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 p-3 rounded-lg bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-100 group-hover:scale-110 group-hover:rotate-3">
-                        {service.icon}
-                      </div>
-                      <div className="flex-1">
-                        <Badge
-                          variant="outline"
-                          className="mb-2 text-blue-600 bg-blue-50 border-blue-200 transition-all duration-300 group-hover:bg-blue-100"
-                        >
-                          {service.category}
-                        </Badge>
-                        <h3 className="text-xl font-bold text-gray-800 mb-2 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-700">
-                          {service.title}
-                        </h3>
-                        <p className="text-gray-600 transition-all duration-300 group-hover:text-gray-700">
-                          {service.description}
-                        </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {realEstateProperties.map((data, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="group"
+                >
+                  <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+                    <div className="relative h-64 overflow-hidden aspect-[16/9] rounded-t-xl">
+                      <img
+                        src={data.image}
+                        alt={data.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-blue-900/20 to-transparent opacity-50 group-hover:opacity-90 transition-opacity duration-300" />
+                      <div className="absolute bottom-0 left-0 w-full p-4">
+                        <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent pt-16 pb-2 px-4 -mx-4 -mb-4">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="text-white text-xl font-bold">
+                              {data.name}
+                            </h3>
+                            
+                            {data.price ? (
+                              <span className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg">
+                                {data?.price}
+                              </span>
+                            ) : null}
+                          </div>
+
+                          <p className="text-blue-100 flex items-center text-sm mb-2">
+                            <MapPin className="w-4 h-4 mr-1 text-blue-200 flex-shrink-0" />
+                            <span className="truncate">{data.address}</span>
+                          </p>
+                          {data?.description ? (
+                            <p className="text-gray-200 text-sm line-clamp-2">
+                              {data?.description}
+                            </p>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Element>
+
+
+      {/* Services Section */}
+      <Element name='Services'>
+        <section ref={ref} className="bg-white py-20 overflow-hidden">
+          <div className="container mx-auto px-4">
+            <motion.h2
+              className="text-4xl font-bold text-center mb-16"
+              initial={{ opacity: 0, y: -20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+                <span className="inline-flex items-center">
+                  <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+                  <span className="relative text-[#1e40af]">
+                    Our Professional Services
+                  </span>
+                  <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+                </span>
+              </h2>
+            </motion.h2>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {[
+                {
+                  icon: <Home className="w-10 h-10" />,
+                  title: "Flat Sale",
+                  description:
+                    "Find your dream flat with our extensive listings across West Bengal, featuring premium properties in prime locations.",
+                  category: "Sales",
+                },
+                {
+                  icon: <Map className="w-10 h-10" />,
+                  title: "Land Sale",
+                  description:
+                    "Invest in high-potential land parcels with clear titles and excellent appreciation prospects throughout the region.",
+                  category: "Sales",
+                },
+                {
+                  icon: <Banknote className="w-10 h-10" />,
+                  title: "Home Loan",
+                  description:
+                    "Access competitive home loan options through our network of trusted financial partners with simplified processing.",
+                  category: "Finance",
+                },
+                {
+                  icon: <Scale className="w-10 h-10" />,
+                  title: "Legal Assistance",
+                  description:
+                    "Our expert legal team provides comprehensive assistance for verification, documentation, and dispute resolution.",
+                  category: "Support",
+                },
+                {
+                  icon: <Paintbrush className="w-10 h-10" />,
+                  title: "Interior Design",
+                  description:
+                    "Transform your property with our professional interior design services that blend aesthetics with functionality.",
+                  category: "Design",
+                },
+                {
+                  icon: <Eye className="w-10 h-10" />,
+                  title: "Property Visits",
+                  description:
+                    "Schedule guided property tours with our experts who provide comprehensive information and personalized assistance.",
+                  category: "Support",
+                },
+              ].map((service, index) => (
+                <motion.div key={index} variants={cardVariants}>
+                  <Card className="h-full border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
+                    <CardContent className="p-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="flex-shrink-0 p-3 rounded-lg bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-100 group-hover:scale-110 group-hover:rotate-3">
+                          {service.icon}
+                        </div>
+                        <div className="flex-1">
+                          <Badge
+                            variant="outline"
+                            className="mb-2 text-blue-600 bg-blue-50 border-blue-200 transition-all duration-300 group-hover:bg-blue-100"
+                          >
+                            {service.category}
+                          </Badge>
+                          <h3 className="text-xl font-bold text-gray-800 mb-2 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-700">
+                            {service.title}
+                          </h3>
+                          <p className="text-gray-600 transition-all duration-300 group-hover:text-gray-700">
+                            {service.description}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      </Element>
+
 
       {/* Contact Form */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            <span className="inline-flex items-center">
-              <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
-              <span className="relative text-[#1e40af]">Conatct Us</span>
-              <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
-            </span>
-          </h2>
-          <div className="max-w-2xl mx-auto">
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div>
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Your name" />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="Your email" />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" placeholder="Subject" />
-              </div>
-              <div>
-                <Label htmlFor="message">Message</Label>
-                <Textarea id="message" placeholder="Your message" rows={4} />
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  checked={acceptTerms}
-                  onCheckedChange={(checked: boolean) =>
-                    setAcceptTerms(checked)
-                  }
-                />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  I Authorize AS Property to send notifications via
-                  Email/Call/SMS/Rcs/Whatsapp
-                </label>
-              </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="link" className="p-0">
-                    View Terms and Conditions
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Terms and Conditions</DialogTitle>
-                    <DialogDescription>
-                      Please read our terms and conditions carefully.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="max-h-[60vh] overflow-y-auto">
-                    <h3 className="text-lg font-semibold mb-2">
-                      1. Acceptance of Terms
-                    </h3>
-                    <p className="mb-4">
-                      By using EcoHaven Estates services, you agree to these
-                      terms.
-                    </p>
-
-                    <h3 className="text-lg font-semibold mb-2">
-                      2. Privacy Policy
-                    </h3>
-                    <p className="mb-4">
-                      Your use of our services is also governed by our Privacy
-                      Policy.
-                    </p>
-
-                    <h3 className="text-lg font-semibold mb-2">
-                      3. User Responsibilities
-                    </h3>
-                    <p className="mb-4">
-                      Users are responsible for maintaining the confidentiality
-                      of their account.
-                    </p>
-
-                    <h3 className="text-lg font-semibold mb-2">
-                      4. Limitation of Liability
-                    </h3>
-                    <p className="mb-4">
-                      EcoHaven Estates is not liable for any indirect,
-                      incidental, or consequential damages.
-                    </p>
-
-                    <h3 className="text-lg font-semibold mb-2">
-                      5. Modifications to Service
-                    </h3>
-                    <p className="mb-4">
-                      We reserve the right to modify or discontinue our service
-                      at any time.
-                    </p>
+      <Element name='Contact'>
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              <span className="inline-flex items-center">
+                <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+                <span className="relative text-[#1e40af]">Conatct Us</span>
+                <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+              </span>
+            </h2>
+            <div className="max-w-2xl mx-auto">
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input id="name" placeholder="Your name" />
                   </div>
-                </DialogContent>
-              </Dialog>
-              <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-transparent to-blue-500 hover:bg-blue-600"
-                disabled={!acceptTerms}
-              >
-                Send Message
-              </Button>
-            </form>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" placeholder="Your email" />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" placeholder="Subject" />
+                </div>
+                <div>
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea id="message" placeholder="Your message" rows={4} />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="terms"
+                    checked={acceptTerms}
+                    onCheckedChange={(checked: boolean) =>
+                      setAcceptTerms(checked)
+                    }
+                  />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I Authorize AS Property to send notifications via
+                    Email/Call/SMS/Rcs/Whatsapp
+                  </label>
+                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="link" className="p-0">
+                      View Terms and Conditions
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Terms and Conditions</DialogTitle>
+                      <DialogDescription>
+                        Please read our terms and conditions carefully.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="max-h-[60vh] overflow-y-auto">
+                      <h3 className="text-lg font-semibold mb-2">
+                        1. Acceptance of Terms
+                      </h3>
+                      <p className="mb-4">
+                        By using EcoHaven Estates services, you agree to these
+                        terms.
+                      </p>
+
+                      <h3 className="text-lg font-semibold mb-2">
+                        2. Privacy Policy
+                      </h3>
+                      <p className="mb-4">
+                        Your use of our services is also governed by our Privacy
+                        Policy.
+                      </p>
+
+                      <h3 className="text-lg font-semibold mb-2">
+                        3. User Responsibilities
+                      </h3>
+                      <p className="mb-4">
+                        Users are responsible for maintaining the confidentiality
+                        of their account.
+                      </p>
+
+                      <h3 className="text-lg font-semibold mb-2">
+                        4. Limitation of Liability
+                      </h3>
+                      <p className="mb-4">
+                        EcoHaven Estates is not liable for any indirect,
+                        incidental, or consequential damages.
+                      </p>
+
+                      <h3 className="text-lg font-semibold mb-2">
+                        5. Modifications to Service
+                      </h3>
+                      <p className="mb-4">
+                        We reserve the right to modify or discontinue our service
+                        at any time.
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-transparent to-blue-500 hover:bg-blue-600"
+                  disabled={!acceptTerms}
+                >
+                  Send Message
+                </Button>
+              </form>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </Element>
+
 
       {/* Floating Chat Button */}
       <div className="fixed bottom-6 right-6 z-50">
