@@ -74,7 +74,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    emailjs.init("YOUR_PUBLIC_KEY");
+    // Log environment variables for debugging
+    console.log("Environment variables check:", {
+      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ,
+      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ,
+      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
+    });
+    
+    // Initialize with public key from environment variable or fallback
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ;
+    emailjs.init(publicKey);
   }, []);
 
   const realEstateProperties = [
@@ -157,16 +166,34 @@ function App() {
     setSubmitSuccess(false);
     
     try {
+      // Log the form data to verify all fields are being captured
+      const formData = new FormData(e.currentTarget);
+      const formValues = Object.fromEntries(formData.entries());
+      console.log('Contact form data being sent:', formValues);
+      
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID 
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
+      
+      console.log("Using EmailJS config:", { serviceId, templateId, publicKey: publicKey.substring(0, 3) + "..." });
+      
       const result = await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_TEMPLATE_ID',
+        serviceId,
+        templateId,
         e.currentTarget,
-        'YOUR_PUBLIC_KEY'
+        publicKey
       );
       
       console.log('Email sent successfully:', result.text);
+      
+      // Clear the form
+      if (formRef.current) {
+        formRef.current.reset();
+      } else {
+        (e.target as HTMLFormElement).reset();
+      }
+      
       setSubmitSuccess(true);
-      e.currentTarget.reset();
       setAcceptTerms(false);
     } catch (error) {
       console.error('Failed to send email:', error);
@@ -179,17 +206,36 @@ function App() {
   const handleChatSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID 
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
+    
     
     try {
+      // Log the form data to verify all fields are being captured
+      const formData = new FormData(e.currentTarget);
+      const formValues = Object.fromEntries(formData.entries());
+      console.log('Form data being sent:', formValues);
+      
       const result = await emailjs.sendForm(
-        'YOUR_SERVICE_ID',
-        'YOUR_CHAT_TEMPLATE_ID',
+        serviceId,
+        templateId,
         e.currentTarget,
-        'YOUR_PUBLIC_KEY'
+        publicKey
       );
       
       console.log('Chat inquiry sent successfully:', result.text);
-      e.currentTarget.reset();
+      
+      // Clear the form
+      if (chatFormRef.current) {
+        chatFormRef.current.reset();
+      } else {
+        (e.target as HTMLFormElement).reset();
+      }
+      
+      // Show success message
+      alert("Your inquiry has been sent successfully!");
       setIsChatOpen(false);
     } catch (error) {
       console.error('Failed to send chat inquiry:', error);
