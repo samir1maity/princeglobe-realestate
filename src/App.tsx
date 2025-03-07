@@ -48,6 +48,7 @@ import eco_cast from "./assets/properties/eco_cast.jpeg";
 import muktu from "./assets/properties/muktu.jpeg";
 import dooars from "./assets/properties/dooars.jpeg";
 import { Link, Element } from 'react-scroll';
+import emailjs from '@emailjs/browser';
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -56,6 +57,11 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const chatFormRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +71,10 @@ function App() {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    emailjs.init("YOUR_PUBLIC_KEY");
   }, []);
 
   const realEstateProperties = [
@@ -140,32 +150,57 @@ function App() {
     },
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError("");
+    setSubmitSuccess(false);
+    
+    try {
+      const result = await emailjs.sendForm(
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID',
+        e.currentTarget,
+        'YOUR_PUBLIC_KEY'
+      );
+      
+      console.log('Email sent successfully:', result.text);
+      setSubmitSuccess(true);
+      e.currentTarget.reset();
+      setAcceptTerms(false);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setSubmitError("Failed to send your message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-  // const images = [
-  //   "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //   "https://images.pexels.com/photos/1438832/pexels-photo-1438832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  // ];
-
-  // useEffect(() => {
-  //   const imageInterval = setInterval(() => {
-  //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  //   }, 5000);
-
-  //   return () => {
-  //     clearInterval(imageInterval);
-  //   };
-  // }, []);
-
-  // const navItems = [
-  //   { name: "Home", to: "home", offset: -100 },
-  //   { name: "Why Us", to: "why-us", offset: -80 },
-  //   { name: "Properties", to: "properties", offset: -80 },
-  //   { name: "Services", to: "services", offset: -80 },
-  //   { name: "Contact", to: "contact", offset: -80 }
-  // ];
+  const handleChatSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const result = await emailjs.sendForm(
+        'YOUR_SERVICE_ID',
+        'YOUR_CHAT_TEMPLATE_ID',
+        e.currentTarget,
+        'YOUR_PUBLIC_KEY'
+      );
+      
+      console.log('Chat inquiry sent successfully:', result.text);
+      e.currentTarget.reset();
+      setIsChatOpen(false);
+    } catch (error) {
+      console.error('Failed to send chat inquiry:', error);
+      alert("Failed to send your message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 overflow-x-hidden max-w-full">
       {/* Header */}
       <motion.header
         initial={{ y: -100 }}
@@ -425,7 +460,7 @@ function App() {
 
       {/* Featured Eco-Friendly Properties */}
       <Element name='Featured'>
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 px-4 sm:px-6">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               <span className="inline-flex items-center">
@@ -598,29 +633,39 @@ function App() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               <span className="inline-flex items-center">
                 <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
-                <span className="relative text-[#1e40af]">Conatct Us</span>
+                <span className="relative text-[#1e40af]">Contact Us</span>
                 <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
               </span>
             </h2>
             <div className="max-w-2xl mx-auto">
-              <form className="space-y-6">
+              {submitSuccess && (
+                <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-md border border-green-200">
+                  Thank you for your message! We'll get back to you soon.
+                </div>
+              )}
+              {submitError && (
+                <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-md border border-red-200">
+                  {submitError}
+                </div>
+              )}
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                   <div>
                     <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Your name" />
+                    <Input id="name" name="name" placeholder="Your name" required />
                   </div>
                   <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Your email" />
+                    <Input id="email" name="email" type="email" placeholder="Your email" required />
                   </div>
                 </div>
                 <div>
                   <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="Subject" />
+                  <Input id="subject" name="subject" placeholder="Subject" required />
                 </div>
                 <div>
                   <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" placeholder="Your message" rows={4} />
+                  <Textarea id="message" name="message" placeholder="Your message" rows={4} required />
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -697,9 +742,9 @@ function App() {
                 <Button
                   type="submit"
                   className="w-full bg-gradient-to-r from-transparent to-blue-500 hover:bg-blue-600"
-                  disabled={!acceptTerms}
+                  disabled={!acceptTerms || isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
@@ -744,13 +789,15 @@ function App() {
               </div>
 
               <div className="p-4">
-                <form className="space-y-4">
+                <form ref={chatFormRef} onSubmit={handleChatSubmit} className="space-y-4">
                   <div>
                     <Label htmlFor="chat-name">Name</Label>
                     <Input
                       id="chat-name"
+                      name="name"
                       placeholder="Your name"
                       className="mt-1"
+                      required
                     />
                   </div>
 
@@ -758,9 +805,11 @@ function App() {
                     <Label htmlFor="chat-email">Email</Label>
                     <Input
                       id="chat-email"
+                      name="email"
                       type="email"
                       placeholder="Your email"
                       className="mt-1"
+                      required
                     />
                   </div>
 
@@ -768,26 +817,49 @@ function App() {
                     <Label htmlFor="chat-phone">Phone</Label>
                     <Input
                       id="chat-phone"
+                      name="phone"
                       placeholder="Your phone number"
                       className="mt-1"
+                      required
                     />
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="chat-location">Preferred Location</Label>
+                    <select 
+                      id="chat-location" 
+                      name="location"
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
+                      required
+                    >
+                      <option value="">Select a location</option>
+                      <option value="konnagar">Konnagar, Hoogly</option>
+                      <option value="hindmotor">Hindmotor</option>
+                      <option value="garia">Garia, South Kolkata</option>
+                      <option value="bolpur">Bolpur-Shantiniketan</option>
+                      <option value="dooars">Dooars, Jalpaiguri</option>
+                      <option value="other">Other</option>
+                    </select>
                   </div>
 
                   <div>
                     <Label htmlFor="chat-message">Message</Label>
                     <Textarea
                       id="chat-message"
+                      name="message"
                       placeholder="How can we help you?"
                       className="mt-1 resize-none"
                       rows={3}
+                      required
                     />
                   </div>
 
                   <Button
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700"
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </div>
