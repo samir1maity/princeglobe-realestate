@@ -102,13 +102,13 @@ function App() {
       description: "1/2/3 bhk Available in Konnagar",
     },
     {
-      name: "Hindmotor",
-      address: "Dooars, Jalpaiguri",
+      name: "Raj Rajeshswari Enclave",
+      address: "GT Road, Konnagar",
       image: gt_road,
       ecoFeatures: ["Green Roof", "Recycled Materials", "Solar Water Heating"],
       price: "₹2700/- per sqft.",
       description:
-        "Luxury mountain retreat overlooking tea gardens with sustainable construction and panoramic Himalayan views.",
+        "Ganga view from your balcony",
     },
     {
       name: "Eco Crest",
@@ -398,7 +398,7 @@ function App() {
               transition={{ duration: 0.8 }}
             >
               <div className="relative inline-block mb-2 md:mb-0">
-                <span>Discover your dream</span>
+                <span>Discover Your Dream</span>
                 <motion.div
                   className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-400 via-blue-500 to-blue-300 rounded-full"
                   initial={{ width: 0, left: "50%" }}
@@ -407,7 +407,7 @@ function App() {
                 />
               </div>{" "}
               <div className="relative inline-block mt-2 md:mt-0">
-                <span>home with us</span>
+                <span>Home With Us</span>
                 <motion.div
                   className="absolute -bottom-2 left-0 right-0 h-[.15rem] bg-gradient-to-r from-blue-300 via-blue-500 to-blue-400 rounded-full"
                   initial={{ width: 0, left: "50%" }}
