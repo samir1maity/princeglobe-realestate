@@ -52,8 +52,6 @@ import emailjs from '@emailjs/browser';
 
 function App() {
   const [acceptTerms, setAcceptTerms] = useState(false);
-  // const [setCurrentImageIndex] = useState(0);
-  // const [isHovered, setIsHovered] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -74,14 +72,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Log environment variables for debugging
-    console.log("Environment variables check:", {
-      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ,
-      templateId: import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID ,
-      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
-    });
-    
-    // Initialize with public key from environment variable or fallback
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ;
     emailjs.init(publicKey);
   }, []);
@@ -208,7 +198,7 @@ function App() {
     setIsSubmitting(true);
 
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID 
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
     
     
