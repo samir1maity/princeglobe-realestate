@@ -77,7 +77,7 @@ function App() {
     // Log environment variables for debugging
     console.log("Environment variables check:", {
       serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID ,
-      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ,
+      templateId: import.meta.env.VITE_EMAILJS_CHAT_TEMPLATE_ID ,
       publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
     });
     
@@ -172,7 +172,7 @@ function App() {
       console.log('Contact form data being sent:', formValues);
       
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID 
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
       
       console.log("Using EmailJS config:", { serviceId, templateId, publicKey: publicKey.substring(0, 3) + "..." });
