@@ -488,6 +488,53 @@ function App() {
         </div>
       </Element>
 
+      <Element name="Locations">
+        <section className="py-16 bg-gray-50 px-4 sm:px-6">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-12">
+              <span className="inline-flex items-center">
+                <span className="h-1 w-12 bg-gradient-to-r from-transparent to-blue-500 rounded-full mr-4"></span>
+                <span className="relative text-[#1e40af]">Explore Our Locations</span>
+                <span className="h-1 w-12 bg-gradient-to-l from-transparent to-blue-500 rounded-full ml-4"></span>
+              </span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Kolkata",
+                  description: "The vibrant city known for its rich culture and history.",
+                  icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
+                },
+                {
+                  name: "Hoogly",
+                  description: "A serene location with beautiful landscapes and riverside views.",
+                  icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
+                },
+                {
+                  name: "Bolpur",
+                  description: "Famous for its artistic heritage and the Santiniketan school.",
+                  icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
+                },
+              ].map((location, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: -50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                >
+                  <div className="bg-blue-100 p-4 rounded-full mb-4">
+                    {location.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800">{location.name}</h3>
+                  <p className="text-gray-600 text-center">{location.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </Element>
+
       <Element name='Properties'>
         <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <PropertyCarousel />
