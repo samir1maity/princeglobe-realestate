@@ -79,7 +79,7 @@ function App() {
   const realEstateProperties = [
     {
       name: "Master para project",
-      address: "konnagar, Hoogly",
+      address: "konnagar, Hooghly",
       image: konnagar1,
       price: "₹2700/- per sqft",
       description: "1/2/3 bhk available",
@@ -506,12 +506,12 @@ function App() {
                   icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
                 },
                 {
-                  name: "Hoogly",
+                  name: "Hooghly",
                   description: "A serene location with beautiful landscapes and riverside views.",
                   icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
                 },
                 {
-                  name: "Bolpur",
+                  name: "Bolpur-Santiniketan",
                   description: "Famous for its artistic heritage and the Santiniketan school.",
                   icon: <MapPin className="w-16 h-16 text-blue-500 mx-auto" />,
                 },
@@ -916,7 +916,7 @@ function App() {
                       required
                     >
                       <option value="">Select a location</option>
-                      <option value="konnagar">Konnagar, Hoogly</option>
+                      <option value="konnagar">Konnagar, Hooghly</option>
                       <option value="hindmotor">Hindmotor</option>
                       <option value="garia">Garia, South Kolkata</option>
                       <option value="bolpur">Bolpur-Shantiniketan</option>
